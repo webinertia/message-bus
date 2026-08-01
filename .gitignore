@@ -1,0 +1,9 @@
+/.phpunit.cache
+/phpbench.json
+/clover.xml
+/coveralls-upload.json
+/phpunit.xml
+/vendor/
+/.vscode
+/mago-results.txt
+*:Zone.Identifier

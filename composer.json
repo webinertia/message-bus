@@ -1,0 +1,72 @@
+{
+    "name": "webware/message-bus",
+    "description": "MessageBus for Mezzio",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "webware",
+        "MessageBus",
+        "Mezzio"
+    ],
+    "homepage": "https://github.com/webinertia/message-bus/discussions",
+    "support": {
+        "issues": "https://github.com/webinertia/message-bus/issues",
+        "source": "https://github.com/webinertia/message-bus",
+        "forum": "https://github.com/webinertia/message-bus/discussions"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.4.1"
+        },
+        "allow-plugins": {
+            "laminas/laminas-component-installer": true,
+            "composer/package-versions-deprecated": true
+        }
+    },
+    "extra": {
+        "laminas": {
+            "config-provider": "Webware\\MessageBus\\ConfigProvider"
+        }
+    },
+    "require": {
+        "php": "~8.4.1 || ~8.5.0",
+        "psr/container": "^2.0",
+        "webware/webware-core": "^0.1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-servicemanager": "^4.0.0",
+        "phpunit/phpunit": "^12.5.30",
+        "roave/security-advisories": "dev-master",
+        "webware/webware-tools": "^0.1.0"
+    },
+    "suggest": {
+        "laminas/laminas-servicemanager": "Laminas\\ServiceManager component"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webware\\MessageBus\\": "src/"
+        },
+        "files": [
+            "src/functions/priority_queue_reducer_factory.php",
+            "src/functions/collection_mapper_factory.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webware\\MessageBusTest\\": "test/unit/",
+            "Webware\\MessageBusIntegrationTest\\": "test/integration/"
+        }
+    },
+    "scripts": {
+        "test-all": [
+            "@test",
+            "@test-integration"
+        ],
+        "test": "phpunit --colors=always --testsuite \"unit test\"",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
+        "test-integration": "phpunit --colors=always --testsuite \"integration test\"",
+        "upload-coverage": "coveralls -v"
+    }
+}
