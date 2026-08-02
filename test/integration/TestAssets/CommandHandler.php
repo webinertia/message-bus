@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Webware\MessageBusIntegrationTest\TestAssets;
 
 use Override;
-use Webmozart\Assert\Assert;
+use Psl\Type;
 use Webware\MessageBus\Command\CommandResult;
 use Webware\MessageBus\CommandHandlerInterface;
 use Webware\MessageBus\MessageInterface;
@@ -17,11 +17,8 @@ final class CommandHandler implements CommandHandlerInterface
     #[Override]
     public function handle(MessageInterface $message): ResultInterface
     {
-        Assert::isInstanceOf(
-            $message,
-            Command::class,
-            'Expected instance of ' . Command::class,
-        );
+        /** @var Command $message */
+        $message = Type\instance_of(Command::class)->assert($message);
 
         return new CommandResult($message, MessageStatus::Success, $message->execute());
     }
