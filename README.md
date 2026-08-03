@@ -33,11 +33,8 @@ composer test-all          # both
 
 ## Acknowledgments
 
-The middleware pipeline design in this package (`MiddlewarePipe`/`Next`) is directly inspired by, and
+The middleware pipeline design in this package is directly inspired by, and
 mirrors the mechanics of, the PSR-15-style pipeline used in [mezzio/mezzio](https://github.com/mezzio/mezzio).
-Two small container helper functions (`collection_mapper_factory()` and
-`priority_queue_reducer_factory()`, used to build a prioritized middleware queue from configuration)
-were originally adapted from Mezzio's own pipeline-building code.
 
 This package was built for the Laminas/Mezzio ecosystem and its users, and that debt is gladly owed —
 credit belongs with the Laminas/Mezzio maintainers and contributors for the original design. See
