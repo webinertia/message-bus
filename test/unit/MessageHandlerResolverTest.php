@@ -8,7 +8,7 @@ use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use Webmozart\Assert\Assert;
+use Psl\Type;
 use Webware\MessageBus\Command\CommandInterface;
 use Webware\MessageBus\Command\CommandResult;
 use Webware\MessageBus\CommandHandlerInterface;
@@ -176,7 +176,7 @@ final class MessageHandlerResolverTest extends TestCase
             #[Override]
             public function handle(MessageInterface $message): ResultInterface
             {
-                Assert::isInstanceOf($message, CommandInterface::class);
+                Type\instance_of(CommandInterface::class)->assert($message);
 
                 return new CommandResult($message, MessageStatus::Success, $this->resultValue);
             }
@@ -193,7 +193,7 @@ final class MessageHandlerResolverTest extends TestCase
             #[Override]
             public function handle(MessageInterface $message): ResultInterface
             {
-                Assert::isInstanceOf($message, QueryInterface::class);
+                Type\instance_of(QueryInterface::class)->assert($message);
 
                 return new QueryResult($message, MessageStatus::Success, $this->resultValue);
             }

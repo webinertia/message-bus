@@ -18,8 +18,8 @@ config key.
 
 ### Mapping a command/query to a handler
 
-Extend the `command_map`/`query_map` in your application's config (e.g. via a `ConfigAggregator`
-provider or a plain `config/autoload/*.global.php` file) and register the handler in the container:
+Extend the `command_map`/`query_map` in your application's config and register the handler in the
+container:
 
 ```php
 use Webware\MessageBus\MessageBusInterface;
@@ -110,5 +110,5 @@ Returns a callable that validates each `middleware_pipeline` entry contains the 
 ## `functions\priority_queue_reducer_factory()`
 
 Returns an `array_reduce()` callback that inserts middleware config entries into an `SplPriorityQueue`,
-keyed by their `priority` (defaulting to 1) with a decrementing serial number as a tiebreaker to
-preserve declaration order for equal priorities.
+keyed by their `priority` (defaulting to 1) with a descending tie-break counter to preserve declaration
+order for equal priorities.

@@ -2,17 +2,17 @@
 
 ## `MessageInterface`
 
-Marker interface for anything that can travel through the bus. `CommandInterface` and `QueryInterface`
-both extend it; `ResultInterface` also extends it so a result can itself be passed to the final handler
-in the pipeline.
+Marker interface for anything that can travel through the bus. `Command\CommandInterface` and
+`Query\QueryInterface` both extend it; `ResultInterface` also extends it so a result can itself be
+passed to the final handler in the pipeline.
 
 ## `MessageBusInterface` / `MessageBus`
 
 `MessageBusInterface` extends `MessageHandlerInterface` and is the public entry point of the library —
 call `handle(MessageInterface $message): ResultInterface` to dispatch a command or query.
 
-`MessageBus` is the default implementation. It's a thin wrapper that delegates directly to a
-`MiddlewarePipelineInterface&MiddlewarePipe` instance.
+`MessageBus` is the default implementation. It's a thin, `final readonly` wrapper that delegates
+directly to a `MiddlewarePipelineInterface&MiddlewarePipe` instance.
 
 ## `MessageHandlerInterface`
 

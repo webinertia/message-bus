@@ -92,8 +92,7 @@ final class MessageHandlerMiddlewareTest extends TestCase
         $intermediateResult = $this->createResultStub('intermediate result');
         $expectedResult     = $this->createResultStub('final result');
 
-        $this->resolver
-            ->method('resolve')
+        $this->resolver->method('resolve')
             ->willReturn($this->createHandler(static fn(): ResultInterface => $intermediateResult));
 
         $handler = $this->createHandler(static fn(): ResultInterface => $expectedResult);
