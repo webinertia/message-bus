@@ -38,6 +38,7 @@
         "laminas/laminas-servicemanager": "^4.0.0",
         "php-standard-library/type": "^6.2",
         "phpunit/phpunit": "^12.5.30",
+        "roave/backward-compatibility-check": "^8.21.0",
         "roave/security-advisories": "dev-master"
     },
     "suggest": {

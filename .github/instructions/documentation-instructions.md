@@ -1,5 +1,5 @@
 ---
-applyTo: "docs/**/*.md"
+applyTo: "docs/{v1}/**/*.md"
 ---
 
 # Documentation Improvement Instructions for Command Bus Library

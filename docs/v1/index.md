@@ -1,9 +1,9 @@
 # message-bus Documentation (v1)
 
-A command/query message bus for [Mezzio](https://docs.mezzio.dev/)/PSR-11 applications. A `MessageInterface`
-(command or query) is handed to a `MessageBusInterface`, which runs it through a middleware pipeline. The
-final middleware in the pipeline resolves and invokes the appropriate handler, and the result flows back out
-through the pipeline as a `ResultInterface`.
+A command/query message bus for [Mezzio](https://docs.mezzio.dev/)/PSR-11 applications. A message
+(command or query) is handed to a `MessageBusInterface`, which runs it through a middleware pipeline.
+The final middleware in that pipeline resolves and invokes the appropriate handler, and the result
+flows back out through the pipeline as a `ResultInterface`.
 
 ```
 Message -> MessageBus -> MiddlewarePipe -> [middleware...] -> MessageHandlerMiddleware -> Handler -> Result
@@ -11,10 +11,14 @@ Message -> MessageBus -> MiddlewarePipe -> [middleware...] -> MessageHandlerMidd
 
 ## Contents
 
-- [Message Bus &amp; Core Contracts](./message-bus.md) — `MessageBusInterface`, `MessageBus`, `MessageInterface`,
-  `ResultInterface`, `StatusInterface`/`MessageStatus`, and handler resolution.
-- [Middleware Pipeline](./middleware-pipeline.md) — `MiddlewarePipe`, `Next`, `MiddlewareInterface`, and the
-  built-in `MessageHandlerMiddleware`/`EmptyPipelineHandler`.
-- [Commands &amp; Queries](./commands-and-queries.md) — the `Command\*` and `Query\*` namespaces.
-- [Configuration &amp; Container Integration](./configuration.md) — `ConfigProvider` and the PSR-11 factories.
-- [Exceptions](./exceptions.md) — the exception types thrown by this library.
+- [Getting Started](./getting-started.md) — installation, requirements, and wiring the bus into your
+  application.
+- [Usage Examples](./usage-examples.md) — defining commands/queries and handlers, dispatching
+  messages, and writing custom middleware.
+- [API Reference](./api-reference/index.md) — what each class/interface does, grouped by area:
+  - [Message Bus &amp; Core Contracts](./api-reference/message-bus.md)
+  - [Middleware Pipeline](./api-reference/middleware-pipeline.md)
+  - [Commands &amp; Queries](./api-reference/commands-and-queries.md)
+  - [Configuration &amp; Container Integration](./api-reference/configuration.md)
+  - [Exceptions](./api-reference/exceptions.md)
+- [Contributing](./contributing.md) — running tests, quality tooling, and CI expectations.

@@ -1,0 +1,40 @@
+name: "Backward Compatibility Check"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  roave-backward-compatibility-check:
+    name: "Roave BC Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history + tags are required so the tool can locate the last tagged version.
+          fetch-depth: 0
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress
+
+      # No SemVer tag exists yet (pre-1.0.0), so there is nothing to diff against;
+      # remove this guard once the first x.y.z tag has been pushed.
+      - name: Check for a comparable tag
+        id: tag-check
+        run: |
+          if git tag -l | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "has_tag=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_tag=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check for BC breaks
+        if: steps.tag-check.outputs.has_tag == 'true'
+        run: vendor/bin/roave-backward-compatibility-check --format=github-actions

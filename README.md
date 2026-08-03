@@ -18,11 +18,10 @@ composer's `extra.laminas.config-provider`.
 Full documentation lives in [docs/v1](./docs/v1/index.md):
 
 - [Overview &amp; Architecture](./docs/v1/index.md)
-- [Message Bus &amp; Core Contracts](./docs/v1/message-bus.md)
-- [Middleware Pipeline](./docs/v1/middleware-pipeline.md)
-- [Commands &amp; Queries](./docs/v1/commands-and-queries.md)
-- [Configuration &amp; Container Integration](./docs/v1/configuration.md)
-- [Exceptions](./docs/v1/exceptions.md)
+- [Getting Started](./docs/v1/getting-started.md)
+- [Usage Examples](./docs/v1/usage-examples.md)
+- [API Reference](./docs/v1/api-reference/index.md)
+- [Contributing](./docs/v1/contributing.md)
 
 ## Testing
 
