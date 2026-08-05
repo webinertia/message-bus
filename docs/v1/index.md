@@ -21,4 +21,5 @@ Message -> MessageBus -> MiddlewarePipe -> [middleware...] -> MessageHandlerMidd
   - [Commands &amp; Queries](./api-reference/commands-and-queries.md)
   - [Configuration &amp; Container Integration](./api-reference/configuration.md)
   - [Exceptions](./api-reference/exceptions.md)
+- [Benchmark Results](./benchmark-results.md) — pipeline dispatch performance measured with PHPBench.
 - [Contributing](./contributing.md) — running tests, quality tooling, and CI expectations.
