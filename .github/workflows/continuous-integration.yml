@@ -21,7 +21,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          coverage: none
+          coverage: ${{ (matrix.php == '8.4' && matrix.dependencies == 'locked') && 'pcov' || 'none' }}
           tools: mago
 
       # Resolve dependencies at the configured strategy level.
@@ -55,5 +55,15 @@ jobs:
         run: mago analyze
 
       - name: Test
-        if: success() || failure()
+        if: (success() || failure()) && !(matrix.php == '8.4' && matrix.dependencies == 'locked')
         run: ./vendor/bin/phpunit --colors=always
+
+      - name: Test with coverage
+        if: (success() || failure()) && matrix.php == '8.4' && matrix.dependencies == 'locked'
+        run: composer test-coverage
+
+      - name: Upload coverage to Coveralls
+        if: success() && matrix.php == '8.4' && matrix.dependencies == 'locked'
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: composer upload-coverage

@@ -36,6 +36,7 @@
     },
     "require-dev": {
         "laminas/laminas-servicemanager": "^4.0.0",
+        "php-coveralls/php-coveralls": "^2.7",
         "php-standard-library/type": "^6.2",
         "phpunit/phpunit": "^12.5.30",
         "roave/backward-compatibility-check": "^8.21.0",
@@ -67,6 +68,6 @@
         "test": "phpunit --colors=always --testsuite \"unit test\"",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "test-integration": "phpunit --colors=always --testsuite \"integration test\"",
-        "upload-coverage": "coveralls -v"
+        "upload-coverage": "php-coveralls -v"
     }
 }
