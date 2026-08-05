@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Webware\MessageBusTest\Exception;
 
+use App\FooCommand;
+use App\FooFactory;
+use App\FooHandler;
+use App\FooMessage;
+use App\FooQuery;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -16,27 +21,27 @@ final class InvalidConfigurationExceptionTest extends TestCase
     #[Test]
     public function forRequiredKeyContainsKeyAndFactory(): void
     {
-        $exception = InvalidConfigurationException::forRequiredKey('handlers', 'App\\FooFactory');
+        $exception = InvalidConfigurationException::forRequiredKey('handlers', FooFactory::class);
 
         static::assertStringContainsString('handlers', $exception->getMessage());
-        static::assertStringContainsString('App\\FooFactory', $exception->getMessage());
+        static::assertStringContainsString(FooFactory::class, $exception->getMessage());
     }
 
     #[Test]
     public function fromHandlerNotFoundReturnsServiceNotFoundException(): void
     {
-        $exception = InvalidConfigurationException::fromHandlerNotFound('App\\FooHandler');
+        $exception = InvalidConfigurationException::fromHandlerNotFound(FooHandler::class);
 
         static::assertInstanceOf(ServiceNotFoundException::class, $exception);
-        static::assertStringContainsString('App\\FooHandler', $exception->getMessage());
+        static::assertStringContainsString(FooHandler::class, $exception->getMessage());
     }
 
     #[Test]
     public function fromInvalidHandlerContainsHandlerClassAndActualType(): void
     {
-        $exception = InvalidConfigurationException::fromInvalidHandler('App\\FooHandler', 'not-a-handler');
+        $exception = InvalidConfigurationException::fromInvalidHandler(FooHandler::class, 'not-a-handler');
 
-        static::assertStringContainsString('App\\FooHandler', $exception->getMessage());
+        static::assertStringContainsString(FooHandler::class, $exception->getMessage());
         static::assertStringContainsString('string', $exception->getMessage());
     }
 
@@ -69,24 +74,24 @@ final class InvalidConfigurationExceptionTest extends TestCase
     #[Test]
     public function fromUnMappedCommandContainsCommandClassName(): void
     {
-        $exception = InvalidConfigurationException::fromUnMappedCommand('App\\FooCommand');
+        $exception = InvalidConfigurationException::fromUnMappedCommand(FooCommand::class);
 
-        static::assertStringContainsString('App\\FooCommand', $exception->getMessage());
+        static::assertStringContainsString(FooCommand::class, $exception->getMessage());
     }
 
     #[Test]
     public function fromUnMappedMessageContainsMessageClassName(): void
     {
-        $exception = InvalidConfigurationException::fromUnMappedMessage('App\\FooMessage');
+        $exception = InvalidConfigurationException::fromUnMappedMessage(FooMessage::class);
 
-        static::assertStringContainsString('App\\FooMessage', $exception->getMessage());
+        static::assertStringContainsString(FooMessage::class, $exception->getMessage());
     }
 
     #[Test]
     public function fromUnMappedQueryContainsQueryClassName(): void
     {
-        $exception = InvalidConfigurationException::fromUnMappedQuery('App\\FooQuery');
+        $exception = InvalidConfigurationException::fromUnMappedQuery(FooQuery::class);
 
-        static::assertStringContainsString('App\\FooQuery', $exception->getMessage());
+        static::assertStringContainsString(FooQuery::class, $exception->getMessage());
     }
 }

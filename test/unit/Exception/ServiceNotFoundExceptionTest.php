@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webware\MessageBusTest\Exception;
 
+use App\FooService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -16,9 +17,9 @@ final class ServiceNotFoundExceptionTest extends TestCase
     #[Test]
     public function fromServiceContainsServiceName(): void
     {
-        $exception = ServiceNotFoundException::fromService('App\\FooService');
+        $exception = ServiceNotFoundException::fromService(FooService::class);
 
-        static::assertStringContainsString('App\\FooService', $exception->getMessage());
+        static::assertStringContainsString(FooService::class, $exception->getMessage());
     }
 
     #[Test]

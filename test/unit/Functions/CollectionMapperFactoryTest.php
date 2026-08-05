@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webware\MessageBusTest\Functions;
 
+use App\FooHandler;
 use PHPUnit\Framework\Attributes\CoversFunction;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ final class CollectionMapperFactoryTest extends TestCase
     public function returnsItemUnchangedWhenKeyIsPresent(): void
     {
         $mapper = collection_mapper_factory('handler');
-        $item   = ['handler' => 'App\\FooHandler'];
+        $item   = ['handler' => FooHandler::class];
 
         static::assertSame($item, $mapper($item));
     }

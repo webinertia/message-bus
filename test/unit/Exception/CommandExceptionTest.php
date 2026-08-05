@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webware\MessageBusTest\Exception;
 
+use App\FooCommand;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -15,24 +16,24 @@ final class CommandExceptionTest extends TestCase
     #[Test]
     public function commandNotHandledContainsCommandClassName(): void
     {
-        $exception = CommandException::commandNotHandled('App\\FooCommand');
+        $exception = CommandException::commandNotHandled(FooCommand::class);
 
-        static::assertStringContainsString('App\\FooCommand', $exception->getMessage());
+        static::assertStringContainsString(FooCommand::class, $exception->getMessage());
     }
 
     #[Test]
     public function createContainsCommandClassName(): void
     {
-        $exception = CommandException::create('App\\FooCommand');
+        $exception = CommandException::create(FooCommand::class);
 
-        static::assertStringContainsString('App\\FooCommand', $exception->getMessage());
+        static::assertStringContainsString(FooCommand::class, $exception->getMessage());
     }
 
     #[Test]
     public function fromCommandClassContainsCommandClassName(): void
     {
-        $exception = CommandException::fromCommandClass('App\\FooCommand');
+        $exception = CommandException::fromCommandClass(FooCommand::class);
 
-        static::assertStringContainsString('App\\FooCommand', $exception->getMessage());
+        static::assertStringContainsString(FooCommand::class, $exception->getMessage());
     }
 }

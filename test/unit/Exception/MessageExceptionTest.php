@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Webware\MessageBusTest\Exception;
 
+use App\FooMessage;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -15,24 +16,24 @@ final class MessageExceptionTest extends TestCase
     #[Test]
     public function createContainsMessageClassName(): void
     {
-        $exception = MessageException::create('App\\FooMessage');
+        $exception = MessageException::create(FooMessage::class);
 
-        static::assertStringContainsString('App\\FooMessage', $exception->getMessage());
+        static::assertStringContainsString(FooMessage::class, $exception->getMessage());
     }
 
     #[Test]
     public function fromMessageClassContainsMessageClassName(): void
     {
-        $exception = MessageException::fromMessageClass('App\\FooMessage');
+        $exception = MessageException::fromMessageClass(FooMessage::class);
 
-        static::assertStringContainsString('App\\FooMessage', $exception->getMessage());
+        static::assertStringContainsString(FooMessage::class, $exception->getMessage());
     }
 
     #[Test]
     public function messageNotHandledContainsMessageClassName(): void
     {
-        $exception = MessageException::messageNotHandled('App\\FooMessage');
+        $exception = MessageException::messageNotHandled(FooMessage::class);
 
-        static::assertStringContainsString('App\\FooMessage', $exception->getMessage());
+        static::assertStringContainsString(FooMessage::class, $exception->getMessage());
     }
 }
