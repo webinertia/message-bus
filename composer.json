@@ -38,6 +38,7 @@
         "laminas/laminas-servicemanager": "^4.0.0",
         "php-coveralls/php-coveralls": "^2.7",
         "php-standard-library/type": "^6.2",
+        "phpbench/phpbench": "^1.7",
         "phpunit/phpunit": "^12.5.30",
         "roave/backward-compatibility-check": "^8.21.0",
         "roave/security-advisories": "dev-master"
@@ -57,10 +58,12 @@
     "autoload-dev": {
         "psr-4": {
             "Webware\\MessageBusTest\\": "test/unit/",
-            "Webware\\MessageBusIntegrationTest\\": "test/integration/"
+            "Webware\\MessageBusIntegrationTest\\": "test/integration/",
+            "Webware\\MessageBusBench\\": "benchmarks/"
         }
     },
     "scripts": {
+        "benchmark": "phpbench run --report=aggregate",
         "test-all": [
             "@test",
             "@test-integration"

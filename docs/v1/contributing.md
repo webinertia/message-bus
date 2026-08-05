@@ -9,6 +9,16 @@ composer test-all           # both suites
 composer test-coverage      # unit tests + coverage-clover clover.xml
 ```
 
+## Benchmarks
+
+```bash
+composer benchmark          # phpbench run --report=aggregate
+```
+
+Benchmarks live under `benchmarks/` (config in `phpbench.json.dist`) and measure pipeline dispatch
+performance — see [Benchmark Results](./benchmark-results.md) for the latest numbers. This directory
+is harness code, not library source, so it's excluded from `mago`'s checked `[source] paths`.
+
 ## Quality tooling
 
 This project uses [Mago](https://mago.carthage.software/) (config in `mago.toml`) for formatting,
