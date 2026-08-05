@@ -13,6 +13,7 @@ use Webware\MessageBus\Exception\MessageException;
 use Webware\MessageBus\Handler\EmptyPipelineHandler;
 use Webware\MessageBus\MessageHandlerInterface;
 use Webware\MessageBus\MessageInterface;
+use Webware\MessageBus\ResultInterface;
 
 #[CoversClass(EmptyPipelineHandler::class)]
 final class EmptyPipelineHandlerTest extends TestCase
@@ -58,6 +59,14 @@ final class EmptyPipelineHandlerTest extends TestCase
     public function handleMethodExistsAndIsCallable(): void
     {
         static::assertInstanceOf(MessageHandlerInterface::class, $this->handler);
+    }
+
+    #[Test]
+    public function handleReturnsMessageWhenItIsAResult(): void
+    {
+        $result = $this->createStub(ResultInterface::class);
+
+        static::assertSame($result, $this->handler->handle($result));
     }
 
     #[Test]
