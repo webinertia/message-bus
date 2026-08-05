@@ -6,6 +6,7 @@
 /test/ export-ignore
 /clover.xml export-ignore
 /mago.toml export-ignore
+/.coveralls.yml export-ignore
 
 # Force our line endings to be LF, even for Windows
 * text eol=lf

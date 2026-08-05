@@ -1,5 +1,8 @@
 # message-bus
 
+[![Continuous Integration](https://github.com/webinertia/message-bus/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/webinertia/message-bus/actions/workflows/continuous-integration.yml)
+[![Coverage Status](https://coveralls.io/repos/github/webinertia/message-bus/badge.svg)](https://coveralls.io/github/webinertia/message-bus)
+
 A command/query message bus for [Mezzio](https://docs.mezzio.dev/) and other PSR-11 based applications.
 Messages (commands or queries) are dispatched through a configurable middleware pipeline to their
 mapped handler, and a result flows back out through that same pipeline.
