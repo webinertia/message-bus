@@ -10,7 +10,6 @@ use Psr\Container\NotFoundExceptionInterface;
 use Webware\MessageBus\Exception\ServiceNotFoundException;
 use Webware\MessageBus\MessageBus;
 use Webware\MessageBus\MessageBusInterface;
-use Webware\MessageBus\MiddlewarePipe;
 use Webware\MessageBus\MiddlewarePipelineInterface;
 
 /**
@@ -29,7 +28,6 @@ final readonly class MessageBusFactory
             throw ServiceNotFoundException::fromService(MiddlewarePipelineInterface::class);
         }
 
-        /** @var MiddlewarePipe&MiddlewarePipelineInterface $middlewarePipeline */
         $middlewarePipeline = $container->get(MiddlewarePipelineInterface::class);
 
         return new MessageBus($middlewarePipeline);

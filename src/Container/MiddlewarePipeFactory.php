@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Webware\MessageBus\Container;
 
-use Psl\Type;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -76,7 +75,6 @@ final readonly class MiddlewarePipeFactory
     }
 
     /**
-     * @throws Type\Exception\AssertException
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

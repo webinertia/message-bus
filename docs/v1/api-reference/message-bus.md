@@ -12,7 +12,7 @@ passed to the final handler in the pipeline.
 call `handle(MessageInterface $message): ResultInterface` to dispatch a command or query.
 
 `MessageBus` is the default implementation. It's a thin, `final readonly` wrapper that delegates
-directly to a `MiddlewarePipelineInterface&MiddlewarePipe` instance.
+directly to a `MiddlewarePipelineInterface` instance.
 
 ## `MessageHandlerInterface`
 

@@ -26,19 +26,26 @@ This runs `phpbench run --report=aggregate` using [`phpbench.json.dist`](../../p
 
 ## Latest results
 
-Recorded on 2026-08-05, PHP 8.4.23 (Linux x86_64, WSL2), 1000 revolutions / 5 iterations per subject.
+Recorded on 2026-08-06, PHP 8.4.24 (Linux x86_64, WSL2), 1000 revolutions / 5 iterations per subject.
 
 | Benchmark                | Subject     | Set          | Mode (μs) | RStDev  |
 |---------------------------|-------------|--------------|-----------|---------|
-| `MiddlewarePipeBench`     | benchHandle | 1 middleware | 3.434114  | ±38.27% |
-| `MessageBusDispatchBench` | benchHandle | 1 middleware | 4.300098  | ±4.19%  |
-| `MessageBusDispatchBench` | benchHandle | 5 middleware | 6.345840  | ±2.47%  |
+| `MiddlewarePipeBench`     | benchHandle | 1 middleware | 3.363319  | ±3.81%  |
+| `MessageBusDispatchBench` | benchHandle | 1 middleware | 4.650117  | ±1.62%  |
+| `MessageBusDispatchBench` | benchHandle | 5 middleware | 6.909352  | ±1.93%  |
+
+`MessageBusDispatchBench` rose by roughly 0.35-0.56μs from the previous baseline (4.300098μs /
+6.345840μs) after `MessageHandlerResolver::resolve()` gained a command/query handler-type check
+(rejecting a resolved handler that doesn't implement the expected `CommandHandlerInterface`/
+`QueryHandlerInterface`). `MiddlewarePipeBench`, which never touches the resolver, stayed flat,
+confirming the increase is attributable to that added validation rather than noise.
 
 At 1 middleware, `MessageBusDispatchBench` (real PSR-11 container + config-driven wiring) costs
-about 0.9μs more than the equivalent `MiddlewarePipeBench` case — that's the overhead
-`MessageHandlerResolver`'s container lookup adds on top of pure pipeline traversal. Going from 1 to
-5 middleware in `MessageBusDispatchBench` adds roughly 0.5μs per middleware, consistent with
-`MiddlewarePipe` cloning the internal `SplQueue` once per `Next::handle()` call.
+about 1.3μs more than the equivalent `MiddlewarePipeBench` case — that's the overhead
+`MessageHandlerResolver`'s container lookup and handler-type check add on top of pure pipeline
+traversal. Going from 1 to 5 middleware in `MessageBusDispatchBench` adds roughly 0.6μs per
+middleware, consistent with `MiddlewarePipe` cloning the internal `SplQueue` once per
+`Next::handle()` call.
 
 Re-run `composer benchmark` and update this table after any change likely to affect pipeline or
 resolver performance.
