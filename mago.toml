@@ -129,3 +129,24 @@ require-api-or-internal = true
 class-initializers = [
     "PHPUnit\\Framework\\TestCase::setUp",
 ]
+
+[guard]
+excludes = ["test"]
+
+[[guard.structural.rules]]
+on = "Webware\\MessageBus\\**"
+target = "interface"
+must-be-named = "*Interface"
+reason = "Interfaces must be suffixed with Interface."
+
+[[guard.structural.rules]]
+on = "Webware\\MessageBus\\**"
+target = "trait"
+must-be-named = "*Trait"
+reason = "Traits must be suffixed with Trait."
+
+[[guard.structural.rules]]
+on = "Webware\\MessageBus\\Exception\\**"
+target = "class"
+must-be-named = "*Exception"
+reason = "Exception classes must be suffixed with Exception."

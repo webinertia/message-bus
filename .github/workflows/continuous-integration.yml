@@ -54,6 +54,10 @@ jobs:
         if: success() || failure()
         run: mago analyze
 
+      - name: Guard
+        if: success() || failure()
+        run: mago guard
+
       - name: Test
         if: (success() || failure()) && !(matrix.php == '8.4' && matrix.dependencies == 'locked')
         run: ./vendor/bin/phpunit --colors=always

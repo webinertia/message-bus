@@ -9,7 +9,7 @@ use Webware\MessageBus\ResultInterface;
 use Webware\MessageBus\StatusInterface;
 
 /**
- * @api
+ * @internal
  */
 interface CommandResultInterface extends CommandInterface, ResultInterface
 {
