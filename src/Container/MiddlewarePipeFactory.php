@@ -37,6 +37,13 @@ final readonly class MiddlewarePipeFactory
         MiddlewarePipelineInterface $middlewarePipe,
         array $middleware,
     ): MiddlewarePipelineInterface {
+        /**
+         * Equivalent mutant: falling through with an empty $middleware array
+         * reaches the same `return $middlewarePipe;` at the end of this
+         * method with no observable side effects, so no test can kill it.
+         *
+         * @infection-ignore-all
+         */
         if ([] === $middleware) {
             return $middlewarePipe;
         }

@@ -18,6 +18,7 @@ use Webware\MessageBus\Middleware\MessageHandlerMiddleware;
 #[CoversMethod(ConfigProvider::class, 'getDependencies')]
 #[CoversMethod(ConfigProvider::class, 'getCommandMap')]
 #[CoversMethod(ConfigProvider::class, 'getMiddleware')]
+#[CoversMethod(ConfigProvider::class, 'getQueryMap')]
 final class ConfigProviderTest extends TestCase
 {
     private ConfigProvider $configProvider;
@@ -110,6 +111,14 @@ final class ConfigProviderTest extends TestCase
         static::assertArrayHasKey('middleware', $middleware[0]);
         static::assertCount(1, $middleware);
         static::assertSame(MessageHandlerMiddleware::class, $middleware[0]['middleware']);
+    }
+
+    #[Test]
+    public function getQueryMapReturnsEmptyArray(): void
+    {
+        $queryMap = $this->configProvider->getQueryMap();
+
+        static::assertEmpty($queryMap);
     }
 
     #[Test]
