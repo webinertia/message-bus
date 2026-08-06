@@ -24,12 +24,11 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress
 
-      # No SemVer tag exists yet (pre-1.0.0), so there is nothing to diff against;
-      # remove this guard once the first x.y.z tag has been pushed.
+      # SemVer gives no BC guarantee below 1.0.0, so only gate on tags >= 1.0.0.
       - name: Check for a comparable tag
         id: tag-check
         run: |
-          if git tag -l | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+          if git tag -l | grep -Eq '^[1-9][0-9]*\.[0-9]+\.[0-9]+$'; then
             echo "has_tag=true" >> "$GITHUB_OUTPUT"
           else
             echo "has_tag=false" >> "$GITHUB_OUTPUT"
