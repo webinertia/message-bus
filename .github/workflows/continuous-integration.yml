@@ -71,5 +71,5 @@ jobs:
       - name: Mutation testing
         if: (success() || failure()) && matrix.php == '8.4' && matrix.dependencies == 'locked'
         env:
-          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+          INFECTION_DASHBOARD_API_KEY: ${{ secrets.INFECTION_DASHBOARD_API_KEY }}
         run: composer mutation-test -- --min-msi=90 --min-covered-msi=90 --logger-github
