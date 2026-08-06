@@ -25,6 +25,71 @@ final class NextTest extends TestCase
      * @throws ReflectionException
      */
     #[Test]
+    public function constructorClonesTheProvidedQueue(): void
+    {
+        // Arrange
+        $queue = $this->createMiddlewareQueue();
+        $queue->enqueue($this->createStub(MiddlewareInterface::class));
+
+        // Act
+        $next = new Next($queue);
+
+        // Assert - internal queue must be a distinct instance from the one passed in
+        $reflection    = new ReflectionClass($next);
+        $queueProperty = $reflection->getProperty('queue');
+        $internalQueue = $queueProperty->getValue($next);
+
+        $this->assertNotSame($queue, $internalQueue);
+    }
+
+    #[Test]
+    public function handleClonedNextInstanceRemainsFunctionalForNextMiddleware(): void
+    {
+        // Arrange
+        $command        = $this->createCommandStub();
+        $expectedResult = $this->createResultStub('result2');
+
+        /** @var MiddlewareInterface&MockObject $middleware2 */
+        $middleware2 = $this->createMock(MiddlewareInterface::class);
+        $middleware2->expects($this->once())
+            ->method('process')
+            ->with($command, $this->isInstanceOf(Next::class))
+            ->willReturn($expectedResult);
+
+        $queue = $this->createMiddlewareQueue();
+
+        /** @var MiddlewareInterface&MockObject $middleware1 */
+        $middleware1 = $this->createMock(MiddlewareInterface::class);
+
+        $queue->enqueue($middleware1);
+        $queue->enqueue($middleware2);
+        $next = new Next($queue);
+
+        $middleware1->expects($this->once())
+            ->method('process')
+            ->with($command, $this->isInstanceOf(Next::class))
+            ->willReturnCallback(function (MessageInterface $message, Next $capturedNext) use (
+                $next,
+                $command,
+            ): ResultInterface {
+                // A CloneRemoval mutant would make $capturedNext identical to $next,
+                // whose queue is nulled out right after cloning.
+                $this->assertNotSame($next, $capturedNext);
+
+                return $capturedNext->handle($command);
+            });
+
+        // Act
+        $result = $next->handle($command);
+
+        // Assert
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    #[Test]
     public function handleClonesNextInstanceWhenProcessingMiddleware(): void
     {
         // Arrange

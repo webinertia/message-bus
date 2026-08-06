@@ -19,9 +19,11 @@ use Webware\MessageBus\Container\MiddlewarePipeFactory;
 use Webware\MessageBus\Exception\InvalidConfigurationException;
 use Webware\MessageBus\Exception\ServiceNotFoundException;
 use Webware\MessageBus\MessageBusInterface;
+use Webware\MessageBus\MessageInterface;
 use Webware\MessageBus\MiddlewareInterface;
 use Webware\MessageBus\MiddlewarePipe;
 use Webware\MessageBus\MiddlewarePipelineInterface;
+use Webware\MessageBus\ResultInterface;
 
 /**
  * @mago-expect lint:kan-defect
@@ -85,6 +87,106 @@ final class MiddlewarePipeFactoryTest extends TestCase
             new ReflectionClass($this->factory)->getMethod('__invoke')
                 ->getName(),
         );
+    }
+
+    /**
+     * @throws ServiceNotFoundException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
+    #[Test]
+    public function invokeContinuesPastUnavailableMiddlewareToPipeSubsequentOnes(): void
+    {
+        $config = [
+            MessageBusInterface::class => [
+                ConfigProvider::MIDDLEWARE_PIPELINE_KEY => [
+                    [
+                        // Higher priority, dequeued first, but unavailable.
+                        'middleware' => 'TestMiddleware1',
+                        'priority'   => 10,
+                    ],
+                    [
+                        // Lower priority, dequeued second, and available.
+                        'middleware' => 'TestMiddleware2',
+                        'priority'   => 5,
+                    ],
+                ],
+            ],
+        ];
+
+        $expectedResult = $this->createStub(ResultInterface::class);
+
+        /** @var MiddlewareInterface&MockObject $middleware2 */
+        $middleware2 = $this->createMock(MiddlewareInterface::class);
+        $middleware2->expects($this->once())
+            ->method('process')
+            ->willReturn($expectedResult);
+
+        $this->container->method('has')
+            ->willReturnCallback(static fn($service) => match ($service) {
+                'config', 'TestMiddleware2' => true,
+                default                     => false,
+            });
+
+        $this->container->method('get')
+            ->willReturnCallback(static fn($service) => match ($service) {
+                'config'          => $config,
+                'TestMiddleware2' => $middleware2,
+                default           => null,
+            });
+
+        $result = ($this->factory)($this->container);
+
+        // A Continue_ -> break mutant would abort the loop at the first
+        // unavailable entry, so TestMiddleware2 would never get piped in.
+        static::assertSame($expectedResult, $result->handle($this->createStub(MessageInterface::class)));
+    }
+
+    /**
+     * @throws ServiceNotFoundException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
+    #[Test]
+    public function invokePipesResolvedMiddlewareIntoTheResultingPipeline(): void
+    {
+        $config = [
+            MessageBusInterface::class => [
+                ConfigProvider::MIDDLEWARE_PIPELINE_KEY => [
+                    [
+                        'middleware' => 'TestMiddleware1',
+                        'priority'   => 10,
+                    ],
+                ],
+            ],
+        ];
+
+        $expectedResult = $this->createStub(ResultInterface::class);
+
+        /** @var MiddlewareInterface&MockObject $middleware */
+        $middleware = $this->createMock(MiddlewareInterface::class);
+        $middleware->expects($this->once())
+            ->method('process')
+            ->willReturn($expectedResult);
+
+        $this->container->method('has')
+            ->willReturnCallback(static fn($service) => match ($service) {
+                'config', 'TestMiddleware1' => true,
+                default                     => false,
+            });
+
+        $this->container->method('get')
+            ->willReturnCallback(static fn($service) => match ($service) {
+                'config'          => $config,
+                'TestMiddleware1' => $middleware,
+                default           => null,
+            });
+
+        $result = ($this->factory)($this->container);
+
+        // If the middleware was never piped in, handling would fall through to
+        // EmptyPipelineHandler instead of invoking our mock's process() method.
+        static::assertSame($expectedResult, $result->handle($this->createStub(MessageInterface::class)));
     }
 
     /**
