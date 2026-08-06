@@ -67,3 +67,9 @@ jobs:
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: composer upload-coverage
+
+      - name: Mutation testing
+        if: (success() || failure()) && matrix.php == '8.4' && matrix.dependencies == 'locked'
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
+        run: composer mutation-test -- --min-msi=90 --min-covered-msi=90 --logger-github

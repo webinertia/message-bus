@@ -9,6 +9,7 @@
 /.coveralls.yml export-ignore
 /benchmarks/ export-ignore
 /phpbench.json.dist export-ignore
+/infection.json5.dist export-ignore
 
 # Force our line endings to be LF, even for Windows
 * text eol=lf
