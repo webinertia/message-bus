@@ -14,22 +14,6 @@ use Webware\MessageBus\Exception\MessageException;
 final class MessageExceptionTest extends TestCase
 {
     #[Test]
-    public function createContainsMessageClassName(): void
-    {
-        $exception = MessageException::create(FooMessage::class);
-
-        static::assertStringContainsString(FooMessage::class, $exception->getMessage());
-    }
-
-    #[Test]
-    public function fromMessageClassContainsMessageClassName(): void
-    {
-        $exception = MessageException::fromMessageClass(FooMessage::class);
-
-        static::assertStringContainsString(FooMessage::class, $exception->getMessage());
-    }
-
-    #[Test]
     public function messageNotHandledContainsMessageClassName(): void
     {
         $exception = MessageException::messageNotHandled(FooMessage::class);

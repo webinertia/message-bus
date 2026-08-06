@@ -10,21 +10,6 @@ use function sprintf;
 
 final class MessageException extends RuntimeException
 {
-    public static function create(string $messageClass): self
-    {
-        return new self(
-            sprintf(
-                'No message handler found for message class "%s".',
-                $messageClass,
-            ),
-        );
-    }
-
-    public static function fromMessageClass(string $messageClass): self
-    {
-        return new self(sprintf('No message handler found for message class "%s".', $messageClass));
-    }
-
     public static function messageNotHandled(string $messageClass): self
     {
         return new self(sprintf('No message handler found for message class "%s".', $messageClass));

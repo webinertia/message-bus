@@ -9,7 +9,7 @@ use Override;
 final readonly class MessageBus implements MessageBusInterface
 {
     public function __construct(
-        private MiddlewarePipelineInterface&MiddlewarePipe $pipeline,
+        private MiddlewarePipelineInterface $pipeline,
     ) {}
 
     #[Override]

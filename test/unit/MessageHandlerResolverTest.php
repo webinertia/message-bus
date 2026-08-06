@@ -124,6 +124,37 @@ final class MessageHandlerResolverTest extends TestCase
     }
 
     #[Test]
+    public function resolveThrowsInvalidConfigurationExceptionWhenHandlerIsWrongType(): void
+    {
+        $command     = new class() implements CommandInterface {};
+        $notAHandler = new class() {};
+
+        $this->container->set('config', $this->buildConfig(
+            commandMap: [$command::class => $notAHandler::class],
+        ));
+        $this->container->set($notAHandler::class, $notAHandler);
+
+        $resolver = new MessageHandlerResolver($this->container);
+
+        $this->expectException(InvalidConfigurationException::class);
+
+        $resolver->resolve($command);
+    }
+
+    #[Test]
+    public function resolveThrowsServiceNotFoundExceptionWhenConfigServiceMissing(): void
+    {
+        $message = new class() implements MessageInterface {};
+
+        $resolver = new MessageHandlerResolver($this->container);
+
+        $this->expectException(ServiceNotFoundException::class);
+        $this->expectExceptionMessage('Service not found: config was not found in the container');
+
+        $resolver->resolve($message);
+    }
+
+    #[Test]
     public function resolveThrowsServiceNotFoundExceptionWhenHandlerIsNotInContainer(): void
     {
         $command = new class() implements CommandInterface {};
