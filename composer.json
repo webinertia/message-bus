@@ -21,8 +21,9 @@
             "php": "8.4.1"
         },
         "allow-plugins": {
-            "laminas/laminas-component-installer": true,
-            "composer/package-versions-deprecated": true
+            "composer/package-versions-deprecated": true,
+            "infection/extension-installer": true,
+            "laminas/laminas-component-installer": true
         }
     },
     "extra": {
@@ -35,6 +36,7 @@
         "psr/container": "^2.0"
     },
     "require-dev": {
+        "infection/infection": "^0.34.1",
         "laminas/laminas-servicemanager": "^4.0.0",
         "php-coveralls/php-coveralls": "^2.7",
         "php-standard-library/type": "^6.2",
@@ -64,6 +66,7 @@
     },
     "scripts": {
         "benchmark": "phpbench run --report=aggregate",
+        "mutation-test": "infection",
         "test-all": [
             "@test",
             "@test-integration"

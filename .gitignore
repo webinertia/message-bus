@@ -4,6 +4,9 @@
 /coveralls-upload.json
 /coverage.txt
 /phpunit.xml
+/infection.json5
+/infection.log
+/summary.log
 /vendor/
 /.vscode
 /mago-results.txt
