@@ -6,10 +6,10 @@
 /test/ export-ignore
 /clover.xml export-ignore
 /mago.toml export-ignore
-/.coveralls.yml export-ignore
 /benchmarks/ export-ignore
 /phpbench.json.dist export-ignore
 /infection.json5.dist export-ignore
+/codecov.yml export-ignore
 
 # Force our line endings to be LF, even for Windows
 * text eol=lf
