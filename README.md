@@ -17,6 +17,11 @@ composer require webware/message-bus
 Registers itself as a Laminas/Mezzio config provider (`Webware\MessageBus\ConfigProvider`) via
 composer's `extra.laminas.config-provider`.
 
+## Support
+
+- Join our [Discord](https://discord.gg/89DfgmuF6C) to ask questions, report bugs, or discuss the library with the maintainers and other users. Please post support questions in the `#message-bus` channel.
+- Report bugs or request features via [GitHub Issues](https://github.com/webinertia/message-bus/issues)
+
 ## Documentation
 
 Full documentation lives in [docs/v1](./docs/v1/index.md):
