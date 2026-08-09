@@ -154,3 +154,6 @@ return [
 Middleware registered without a `priority` defaults to `1`; entries sharing the same priority run in
 the order they were declared. Middleware class-strings that aren't registered in the container are
 silently skipped when the pipeline is built (see [Configuration](./api-reference/configuration.md)).
+
+See [Execution Flow](./flow-charts.md#custom-middleware-example) for a diagram of how this
+`LoggingMiddleware` example fits into the pipeline, and why it never sees the `CommandResult`.
