@@ -3,14 +3,13 @@
 A command/query message bus for [Mezzio](https://docs.mezzio.dev/)/PSR-11 applications. A message
 (command or query) is handed to a `MessageBusInterface`, which runs it through a middleware pipeline.
 The final middleware in that pipeline resolves and invokes the appropriate handler, and the result
-flows back out through the pipeline as a `ResultInterface`.
-
-```
-Message -> MessageBus -> MiddlewarePipe -> [middleware...] -> MessageHandlerMiddleware -> Handler -> Result
-```
+flows back out through the pipeline as a `ResultInterface`. See [Execution Flow](./flow-charts.md)
+for diagrams of how a message moves through the pipeline and back.
 
 ## Contents
 
+- [Execution Flow](./flow-charts.md) — diagrams of message dispatch and result flow through the
+  pipeline.
 - [Getting Started](./getting-started.md) — installation, requirements, and wiring the bus into your
   application.
 - [Usage Examples](./usage-examples.md) — defining commands/queries and handlers, dispatching
