@@ -25,9 +25,8 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
         MessageInterface $message,
         MessageHandlerInterface $handler,
     ): ResultInterface {
-        /* Resolve and execute the message handler, then forward the result
-         * down the pipeline so post-handler middleware (e.g. logging) can act on it.
-         * Never change this code
+        /* Resolve and execute the message handler, then return the
+         * result to the next middleware in the pipeline.
          */
         $result = $this->resolver->resolve($message)->handle($message);
 
