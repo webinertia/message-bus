@@ -6,13 +6,12 @@ namespace Webware\MessageBus\Middleware;
 
 use Override;
 use TypeError;
-use Webware\MessageBus\CommandHandlerInterface;
 use Webware\MessageBus\Exception\HandlerMethodNotFoundException;
+use Webware\MessageBus\MessageHandlerInterface;
 use Webware\MessageBus\MessageHandlerResolverInterface;
 use Webware\MessageBus\MessageInterface;
 use Webware\MessageBus\MiddlewareInterface;
 use Webware\MessageBus\PipelineHandlerInterface;
-use Webware\MessageBus\QueryHandlerInterface;
 use Webware\MessageBus\ResultInterface;
 use Webware\MessageBus\StrategyInterface;
 
@@ -54,7 +53,7 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
 
     private function checkResult(
         mixed $result,
-        CommandHandlerInterface|QueryHandlerInterface $handler,
+        MessageHandlerInterface $handler,
         string $method,
     ): ResultInterface {
         if (! $result instanceof ResultInterface) {
