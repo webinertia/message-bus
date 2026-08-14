@@ -1,11 +1,11 @@
-# Upgrade notes — 1.1.x → 2.0.0
+# Upgrade notes, 1.1.x → 2.0.0
 
 Consumer-facing breaking changes introduced by the resolver + strategy refactor.
 
 ## Handler contracts
 
 - `Webware\MessageBus\CommandHandlerInterface` and `Webware\MessageBus\QueryHandlerInterface`
-  are now **markers** — they no longer declare `handle()`. A handler implements the marker and
+  are now **markers**, they no longer declare `handle()`. A handler implements the marker and
   declares only the method its wired strategy needs.
 - Existing handle-based handlers keep working under the default strategy, with one change:
   remove `#[Override]` from `handle()`, because it no longer overrides an interface method.
@@ -32,8 +32,8 @@ Consumer-facing breaking changes introduced by the resolver + strategy refactor.
   in typical use.
 - `Webware\MessageBus\StrategyInterface` is new (`@api`), with `handlerMethod(MessageInterface $message):
   string`. Two implementations ship:
-  - `Webware\MessageBus\Strategy\HandleStrategy` (default) — returns `'handle'`.
-  - `Webware\MessageBus\Strategy\ClassnameStrategy` (opt-in) — inflects the message short class
+  - `Webware\MessageBus\Strategy\HandleStrategy` (default): returns `'handle'`.
+  - `Webware\MessageBus\Strategy\ClassnameStrategy` (opt-in): inflects the message short class
     name, `lcfirst` (`CreateUser` → `createUser`).
 - To opt into named methods, alias `StrategyInterface::class` to `ClassnameStrategy::class` in
   your container config. The default `ConfigProvider` aliases it to `HandleStrategy`.

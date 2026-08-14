@@ -18,7 +18,7 @@ final readonly class CreateUser implements CommandInterface
 ```
 
 `CommandHandlerInterface::handle()` is typed to the broad `MessageInterface`, but parameter types are
-contravariant — an implementation is free to widen a parameter type, just never narrow it. Declaring
+contravariant, an implementation is free to widen a parameter type, just never narrow it. Declaring
 the parameter as `MessageInterface|CommandInterface` is still a valid override (the union includes
 `MessageInterface`, so it's just as wide as the interface requires), and it tells static analysis tools
 (and readers) that this handler only ever receives commands, without any runtime cost:
@@ -127,7 +127,7 @@ final readonly class LoggingMiddleware implements MiddlewareInterface
 
 Register it as a service and add it to `middleware_pipeline` with a `priority`. Higher priority runs
 earlier; `Middleware\MessageHandlerMiddleware` is registered at priority `1` (`ConfigProvider::DEFAULT_PRIORITY`)
-so it runs last by default — give your middleware a higher priority to run before the handler is
+so it runs last by default, give your middleware a higher priority to run before the handler is
 resolved:
 
 ```php

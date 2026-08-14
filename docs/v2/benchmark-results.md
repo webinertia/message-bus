@@ -1,7 +1,7 @@
 # Benchmark Results (V2)
 
 Benchmarks are written with [PHPBench](https://phpbench.readthedocs.io/) and live under
-[`benchmarks/`](../../benchmarks/). They are not part of `mago`'s checked `[source] paths` — this is
+[`benchmarks/`](../../benchmarks/). They are not part of `mago`'s checked `[source] paths`, this is
 harness/tooling code, not library source, so it isn't held to the same lint/analyze conventions as
 `src/`.
 
@@ -15,12 +15,12 @@ This runs `phpbench run --report=aggregate` using [`phpbench.json.dist`](../../p
 
 ## What's measured
 
-- **`MiddlewarePipeBench`** — dispatches a command through `MessageBus` -> `MiddlewarePipe` with a
+- **`MiddlewarePipeBench`**: dispatches a command through `MessageBus` -> `MiddlewarePipe` with a
   single pass-through middleware ahead of the terminal `MessageHandlerMiddleware`. Handler resolution
   is stubbed with a static resolver wired to the default `HandleStrategy`, so the number isolates the
   cost of pipeline traversal plus the strategy seam (`StrategyInterface::handlerMethod()`, the `is_callable()`
   guard, and dynamic dispatch).
-- **`MessageBusDispatchBench`** — the total cost of handling a command end-to-end through a
+- **`MessageBusDispatchBench`**: the total cost of handling a command end-to-end through a
   container-backed setup (Laminas `ServiceManager`), including real `MessageHandlerResolver`
   container lookups, at 1 and 5 pass-through middleware.
 

@@ -8,7 +8,7 @@ passed to the final handler in the pipeline.
 
 ## `MessageBusInterface` / `MessageBus`
 
-`MessageBusInterface` extends `MessageHandlerInterface` and is the public entry point of the library —
+`MessageBusInterface` extends `MessageHandlerInterface` and is the public entry point of the library,
 call `handle(MessageInterface $message): ResultInterface` to dispatch a command or query.
 
 `MessageBus` is the default implementation. It's a thin, `final readonly` wrapper that delegates

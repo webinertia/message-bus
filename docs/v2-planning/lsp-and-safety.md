@@ -4,7 +4,7 @@
 
 V2 separates the pipeline contract from the resolved-handler contract.
 
-### Pipeline side — fully LSP-checked
+### Pipeline side, fully LSP-checked
 
 ```php
 interface PipelineHandlerInterface
@@ -20,7 +20,7 @@ the parameter type (contravariance), never narrow the parameter. `Next`,
 `EmptyPipelineHandler`, and `MiddlewarePipe` keep this contract, so the pipeline machinery
 remains fully type-safe.
 
-### Resolved-handler side — no forced method, runtime-enforced
+### Resolved-handler side, no forced method, runtime-enforced
 
 ```php
 interface CommandHandlerInterface {}
@@ -28,8 +28,8 @@ interface QueryHandlerInterface {}
 ```
 
 These markers declare no method, so there is nothing to be Liskov-checked. The dispatch
-contract is `$resolved->{$method}($message)` with `$method` a runtime string. Every path —
-including the default `'handle'` — is now enforced at runtime:
+contract is `$resolved->{$method}($message)` with `$method` a runtime string. Every path,
+including the default `'handle'`, is now enforced at runtime:
 
 | Guarantee | Enforced by |
 | --- | --- |
@@ -56,14 +56,14 @@ error.
 
 Handlers that want a checked dispatch can opt in, at their choice:
 
-- **`__invoke`** — declare `__invoke(MessageInterface $message): ResultInterface`. It is
+- **`__invoke`**: declare `__invoke(MessageInterface $message): ResultInterface`. It is
   declarable in an interface, so this path is fully LSP-checked, and the strategy returns
   `'__invoke'`.
-- **A handle-bearing marker** (open decision) — e.g.
+- **A handle-bearing marker** (open decision): e.g.
   `HandleCommandHandlerInterface extends CommandHandlerInterface` declaring
   `handle(MessageInterface $message): ResultInterface`. This restores `#[Override]` and the
   static guarantee for handle-based handlers, at the cost of an extra interface.
-- **A typed `__call`** — `__call(string $name, array $args): ResultInterface` makes any name
+- **A typed `__call`**: `__call(string $name, array $args): ResultInterface` makes any name
   callable with a runtime-enforced return type; the argument is `array` and must be asserted
   inside `__call`.
 

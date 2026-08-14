@@ -45,7 +45,7 @@ composer test-all          # both
 The middleware pipeline design in this package is directly inspired by, and
 mirrors the mechanics of, the PSR-15-style pipeline used in [mezzio/mezzio](https://github.com/mezzio/mezzio).
 
-This package was built for the Laminas/Mezzio ecosystem and its users, and that debt is gladly owed —
+This package was built for the Laminas/Mezzio ecosystem and its users, and that debt is gladly owed,
 credit belongs with the Laminas/Mezzio maintainers and contributors for the original design. See
 [mezzio/mezzio](https://github.com/mezzio/mezzio) and its
 [LICENSE](https://github.com/mezzio/mezzio/blob/master/LICENSE.md) (BSD-3-Clause) for the source of that

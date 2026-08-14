@@ -2,7 +2,7 @@
 
 Solid arrows below are the message travelling forward through the pipeline, in priority order;
 dashed arrows are the result on its way back. A result doesn't exist until `MessageHandlerMiddleware`
-resolves and invokes the handler, and it returns directly to the caller from there — notice no
+resolves and invokes the handler, and it returns directly to the caller from there, notice no
 dashed arrow ever touches earlier middleware, since it has no part on that side.
 
 GitHub renders Mermaid diagrams as scalable SVG, so you can zoom in (browser zoom, or pinch/scroll on

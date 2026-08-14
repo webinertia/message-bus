@@ -15,7 +15,7 @@ composer require webware/message-bus
 
 The package registers `Webware\MessageBus\ConfigProvider` via composer's
 `extra.laminas.config-provider`, so it's auto-discovered by
-`Laminas\ConfigAggregator\ConfigAggregator` (and therefore by Mezzio) — no manual config file needed.
+`Laminas\ConfigAggregator\ConfigAggregator` (and therefore by Mezzio), no manual config file needed.
 
 If you're not using `ConfigAggregator`, merge the provider's output into your own configuration
 manually:
@@ -38,7 +38,7 @@ $config = array_merge_recursive(
 - `Middleware\MessageHandlerMiddleware` (registered in the pipeline by default, at the lowest priority
   so it runs last)
 
-None of this does anything useful yet, though — you still need to:
+None of this does anything useful yet, though, you still need to:
 
 1. Define a command or query (implementing `Command\CommandInterface` or `Query\QueryInterface`).
 2. Define its handler (implementing `CommandHandlerInterface` or `QueryHandlerInterface`).

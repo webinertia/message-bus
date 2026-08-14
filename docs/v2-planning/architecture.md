@@ -28,7 +28,7 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
 
 ## What changes and what stays
 
-### Pipeline side — renamed, contract unchanged
+### Pipeline side, renamed, contract unchanged
 
 The pipeline continuation contract keeps `handle()`, renamed to `PipelineHandlerInterface`
 (see [MessageHandlerInterface refactor](./message-handler-interface-refactor.md)):
@@ -47,7 +47,7 @@ implement this contract directly; `MiddlewarePipe` gets it through
 `handle()` directly (open decision in the refactor doc). Their `#[Override]` attributes on
 `handle()` remain valid.
 
-### Resolved-handler side — no forced method (changed)
+### Resolved-handler side, no forced method (changed)
 
 `CommandHandlerInterface` and `QueryHandlerInterface` become markers. They no longer extend
 `MessageHandlerInterface`, so they force no method:
@@ -92,7 +92,7 @@ interface StrategyInterface
 `handlerMethod()` is the sole authority for choosing the handler method name. The middleware only
 depends on `StrategyInterface`; it never knows which concrete strategy is wired.
 
-## Shipped strategy 1 — `HandleStrategy` (default)
+## Shipped strategy 1, `HandleStrategy` (default)
 
 ```php
 namespace Webware\MessageBus\Strategy;
@@ -111,9 +111,9 @@ final readonly class HandleStrategy implements StrategyInterface
 
 Returns `'handle'`. Handle-based handlers declare `handle()` themselves and keep working.
 Because the marker no longer guarantees `handle()`, the middleware's `is_callable` guard
-still applies on this path — but it always passes for any handler that declares `handle()`.
+still applies on this path, but it always passes for any handler that declares `handle()`.
 
-## Shipped strategy 2 — `ClassnameStrategy` (opt-in)
+## Shipped strategy 2, `ClassnameStrategy` (opt-in)
 
 ```php
 namespace Webware\MessageBus\Strategy;
@@ -140,7 +140,7 @@ final readonly class ClassnameStrategy implements StrategyInterface
 
 A consumer opts in by changing one container entry (`StrategyInterface::class`).
 
-## Middleware — the target call site
+## Middleware, the target call site
 
 ```php
 namespace Webware\MessageBus\Middleware;
@@ -184,13 +184,13 @@ The proposal's one-line form, made explicit:
 $result = $this->resolver->resolve($message)->{$this->strategy->handlerMethod($message)}($message);
 ```
 
-The `is_callable` guard is now **required on every path** — the marker contract guarantees
+The `is_callable` guard is now **required on every path**, the marker contract guarantees
 no method, so `'handle'` and `'createUser'` are equally runtime-checked. The guard turns a
 missing method into a library exception instead of a raw `Error`.
 
 ## Example handlers
 
-Default (`HandleStrategy`) — handle-based handler, one attribute lighter:
+Default (`HandleStrategy`), handle-based handler, one attribute lighter:
 
 ```php
 namespace App\Command;
@@ -213,7 +213,7 @@ final readonly class CreateUserHandler implements CommandHandlerInterface
 }
 ```
 
-Opt-in (`ClassnameStrategy`) — no `handle()` at all:
+Opt-in (`ClassnameStrategy`), no `handle()` at all:
 
 ```php
 final readonly class CreateUserHandler implements CommandHandlerInterface
@@ -277,7 +277,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
 ```
 
 The resolver still validates `instanceof` against the command/query marker and fails fast on
-misconfigured maps. Whether the handler has the strategy's method is the middleware's job —
+misconfigured maps. Whether the handler has the strategy's method is the middleware's job,
 the resolver has no strategy.
 
 ## Error surface

@@ -1,4 +1,4 @@
-# Resolver + Strategy Collaborator — V2 (no backwards compatibility)
+# Resolver + Strategy Collaborator, V2 (no backwards compatibility)
 
 > **Status:** planning only. **Zero code changes** have been made to `src/` or `test/`.
 > This is the V2 variation of the planning work in
@@ -31,18 +31,18 @@ need it.
 `StrategyInterface::handlerMethod()` is the sole authority for choosing the method name. The
 framework ships two strategies, and the application picks one purely by wiring:
 
-- `HandleStrategy` (default) — returns `'handle'`. Today's behavior, behind a seam.
-- `ClassnameStrategy` (opt-in) — inflects `App\Command\CreateUser` to `createUser`.
+- `HandleStrategy` (default): returns `'handle'`. Today's behavior, behind a seam.
+- `ClassnameStrategy` (opt-in): inflects `App\Command\CreateUser` to `createUser`.
 
 Because the middleware depends only on `StrategyInterface`, switching is a one-line
-container alias change — no handler, resolver, or middleware change.
+container alias change, no handler, resolver, or middleware change.
 
 ## What V2 settles
 
-1. Strategy owns method-name derivation — `handlerMethod()` has total control.
+1. Strategy owns method-name derivation, `handlerMethod()` has total control.
 2. Shipped default: `HandleStrategy` (handle-based handlers keep working).
 3. Shipped alternative: `ClassnameStrategy` (named methods), opt-in via wiring.
-4. `CommandHandlerInterface`/`QueryHandlerInterface` become markers — no forced `handle()`.
+4. `CommandHandlerInterface`/`QueryHandlerInterface` become markers, no forced `handle()`.
 5. `PipelineHandlerInterface::handle()` stays (renamed from `MessageHandlerInterface`), for
    pipeline machinery only.
 6. Resolver return type changes to the markers.
@@ -50,15 +50,15 @@ container alias change — no handler, resolver, or middleware change.
 
 ## Contents
 
-- [Architecture](./architecture.md) — contracts, shipped strategies, middleware, error surface.
-- [PHP semantics](./php-semantics.md) — the verified language facts this design rests on.
-- [LSP and type safety](./lsp-and-safety.md) — where guarantees live once `handle()` is no
+- [Architecture](./architecture.md): contracts, shipped strategies, middleware, error surface.
+- [PHP semantics](./php-semantics.md): the verified language facts this design rests on.
+- [LSP and type safety](./lsp-and-safety.md): where guarantees live once `handle()` is no
   longer forced.
-- [MessageHandlerInterface refactor](./message-handler-interface-refactor.md) — renaming the
+- [MessageHandlerInterface refactor](./message-handler-interface-refactor.md): renaming the
   pipeline continuation contract.
-- [Decisions](./decisions.md) — remaining open questions.
-- [Refactor plan](./refactor-plan.md) — staged, verifiable plan to implement the 2.0 design.
-- [Upgrade notes](./upgrade-notes.md) — consumer-facing 1.1.x → 2.0.0 breaking changes.
+- [Decisions](./decisions.md): remaining open questions.
+- [Refactor plan](./refactor-plan.md): staged, verifiable plan to implement the 2.0 design.
+- [Upgrade notes](./upgrade-notes.md): consumer-facing 1.1.x → 2.0.0 breaking changes.
 
 ## Headline conclusions
 

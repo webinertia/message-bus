@@ -11,7 +11,7 @@ decisions-relevant subset is reproduced here so V2 stands alone.
 ```php
 $o->{$name}($arg);      // call method $name now
 $o->{$name}(...);       // first-class callable: capture as Closure, do NOT call
-$o->{$name};            // dynamic PROPERTY read — not a call
+$o->{$name};            // dynamic PROPERTY read, not a call
 ```
 
 - `$o->{$name}` with no parentheses reads a property. Observed: `Undefined property` warning
@@ -52,7 +52,7 @@ is_callable([$h, 'anything']);   // true
 
 V2's middleware guard uses `is_callable`, because it must accept both real methods and
 `__call`-backed handlers. The asymmetry also means `is_callable` is a weaker guarantee than
-"a typed method exists" — it is a callability check, not a signature check.
+"a typed method exists", it is a callability check, not a signature check.
 
 ## Runtime error modes
 

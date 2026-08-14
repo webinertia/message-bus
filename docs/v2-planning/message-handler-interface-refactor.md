@@ -5,14 +5,14 @@
 ## Problem
 
 After the V2 split, `MessageHandlerInterface` has exactly one remaining role: the pipeline
-continuation. But the name reads as "implement this to handle a message" — which is the very
+continuation. But the name reads as "implement this to handle a message", which is the very
 conflation V2 removes. A docblock cannot fix that, because the interface leaks into `@api`
 signatures: consumers see the name in `MiddlewareInterface::process()` and on
 `MessageBusInterface`, not the docblock.
 
 ## Current contract
 
-`src/MessageHandlerInterface.php` — `Webware\MessageBus\MessageHandlerInterface`:
+`src/MessageHandlerInterface.php`, `Webware\MessageBus\MessageHandlerInterface`:
 
 ```php
 /** @internal */
@@ -22,7 +22,7 @@ interface MessageHandlerInterface
 }
 ```
 
-## Research findings — who references it after the V2 split
+## Research findings, who references it after the V2 split
 
 | File | FQCN | Usage |
 | --- | --- | --- |
@@ -35,9 +35,9 @@ interface MessageHandlerInterface
 
 Two more references disappear under V2 and are therefore out of scope for the rename:
 
-- `src/CommandHandlerInterface.php` / `src/QueryHandlerInterface.php` — become markers, no
+- `src/CommandHandlerInterface.php` / `src/QueryHandlerInterface.php`: become markers, no
   longer `extends MessageHandlerInterface`.
-- `src/MessageHandlerResolverInterface.php` / `src/MessageHandlerResolver.php` — return the
+- `src/MessageHandlerResolverInterface.php` / `src/MessageHandlerResolver.php`: return the
   markers, no longer return `MessageHandlerInterface`.
 
 ## Recommendation
@@ -64,9 +64,9 @@ Reasons:
 
 `handle()` cannot be folded into an existing interface cleanly:
 
-- **`MiddlewareInterface`** — a middleware is not a handler. It implements only `process()`;
+- **`MiddlewareInterface`**: a middleware is not a handler. It implements only `process()`;
   adding `handle()` there would force every middleware to carry a dead method.
-- **`MiddlewarePipelineInterface`** — `Next` and `EmptyPipelineHandler` are not pipelines.
+- **`MiddlewarePipelineInterface`**: `Next` and `EmptyPipelineHandler` are not pipelines.
   They implement only `handle()` and lack `pipe()`, so they cannot satisfy that interface.
   Yet `Next` is exactly what `MiddlewareInterface::process()` receives as its second
   argument, so that parameter's type must be satisfiable by a `handle()`-only class.
@@ -85,7 +85,7 @@ interface MessageBusInterface
 }
 ```
 
-This removes one reference but does not delete the interface — `Next`,
+This removes one reference but does not delete the interface, `Next`,
 `EmptyPipelineHandler`, and `MiddlewareInterface::process()` still need it. Keeping the
 `extends` is worth it only if a bus should be usable as another pipeline's terminal handler;
 the current code never does that, so dropping the `extends` is the tighter choice.
@@ -111,7 +111,7 @@ public function process(
 `MessageHandlerInterface` is marked `@internal`, but its *name* appears in `@api` signatures
 (`MiddlewareInterface::process()`, `MessageBusInterface extends ...`). Renaming it is
 therefore a de facto API break even though the interface itself is internal. This is exactly
-why the rename belongs in the no-BC V2 — and why it is the only real enforcement available:
+why the rename belongs in the no-BC V2, and why it is the only real enforcement available:
 the interface name is what consumers read, and a docblock does not constrain them.
 
 ## Mechanical scope
@@ -120,4 +120,4 @@ the interface name is what consumers read, and a docblock does not constrain the
 2. Update the six references in the table above.
 3. Rename the `$handler` parameter to `$next` in `MiddlewareInterface::process()` and
    `MessageHandlerMiddleware::process()`.
-4. No config, factory, or `MessageBusInterface` shape changes — only type/parameter names.
+4. No config, factory, or `MessageBusInterface` shape changes, only type/parameter names.

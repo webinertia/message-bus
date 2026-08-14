@@ -42,13 +42,13 @@ composer benchmark # phpbench run --report=aggregate
 ```
 
 Benchmarks live under `benchmarks/` (config in `phpbench.json.dist`) and measure pipeline dispatch
-performance — see [Benchmark Results](./benchmark-results.md) for the latest numbers. This directory
+performance, see [Benchmark Results](./benchmark-results.md) for the latest numbers. This directory
 is harness code, not library source, so it's excluded from `mago`'s checked `[source] paths`.
 
 ## Quality tooling
 
 This project uses [Mago](https://mago.carthage.software/) (config in `mago.toml`) for formatting,
-linting, and static analysis — there is no PHPStan/PHP_CodeSniffer in this repo.
+linting, and static analysis, there is no PHPStan/PHP_CodeSniffer in this repo.
 
 ```bash
 mago format --check # formatting check
@@ -78,7 +78,7 @@ for the full set of conventions (naming, `#[Test]`/`#[CoversClass]` attributes, 
 directory layout). In short:
 
 * One test class per source class, mirrored under `test/unit/`.
-* Methods use the `#[Test]` attribute with a plain camelCase name describing the scenario — no `test`
+* Methods use the `#[Test]` attribute with a plain camelCase name describing the scenario: no `test`
   prefix.
 * Prefer `$this->createStub(...)` over `$this->createMock(...)` unless you need to assert *how* a
   dependency was called.
@@ -88,4 +88,4 @@ directory layout). In short:
 
 This library is nearing a `1.0.0` release. Once tagged, avoid breaking changes to any class/interface
 marked `@api` in its docblock (see [API Reference](./api-reference/index.md)) without a major version
-bump — `roave/backward-compatibility-check` enforces this in CI.
+bump, `roave/backward-compatibility-check` enforces this in CI.

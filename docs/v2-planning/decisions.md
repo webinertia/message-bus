@@ -2,11 +2,11 @@
 
 ## Settled (direction)
 
-1. Strategy owns method-name derivation — `handlerMethod()` has total control.
+1. Strategy owns method-name derivation, `handlerMethod()` has total control.
 2. Shipped default: `HandleStrategy` (`'handle'`).
 3. Shipped alternative: `ClassnameStrategy` (inflect from short class name, `lcfirst`),
    opt-in by changing one container alias.
-4. `CommandHandlerInterface`/`QueryHandlerInterface` become markers — no forced `handle()`.
+4. `CommandHandlerInterface`/`QueryHandlerInterface` become markers, no forced `handle()`.
 5. `PipelineHandlerInterface::handle()` stays, for pipeline machinery only (renamed from
    `MessageHandlerInterface`).
 6. Resolver return type changes to the markers
