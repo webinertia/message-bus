@@ -7,5 +7,5 @@ namespace Webware\MessageBus;
 /** @api */
 interface MessageHandlerResolverInterface
 {
-    public function resolve(MessageInterface $message): CommandHandlerInterface|QueryHandlerInterface;
+    public function resolve(MessageInterface $message): MessageHandlerInterface;
 }

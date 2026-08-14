@@ -27,7 +27,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
      * @throws ServiceNotFoundException
      */
     #[Override]
-    public function resolve(MessageInterface $message): CommandHandlerInterface|QueryHandlerInterface
+    public function resolve(MessageInterface $message): MessageHandlerInterface
     {
         if (! $this->container->has('config')) {
             throw ServiceNotFoundException::fromService('config');
@@ -41,7 +41,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
         /**
          * Queries are checked first: reads are expected to outnumber writes.
          *
-         * @var array{0: class-string, 1: class-string<CommandHandlerInterface|QueryHandlerInterface>} $resolved
+         * @var array{0: class-string, 1: class-string<MessageHandlerInterface>} $resolved
          */
         $resolved = match (true) {
             array_key_exists($message::class, $cmdBusConfig[ConfigProvider::QUERY_MAP_KEY]) => [
@@ -74,7 +74,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
      * @throws ContainerExceptionInterface
      * @throws InvalidConfigurationException
      */
-    public function __invoke(MessageInterface $message): CommandHandlerInterface|QueryHandlerInterface
+    public function __invoke(MessageInterface $message): MessageHandlerInterface
     {
         return $this->resolve($message);
     }
