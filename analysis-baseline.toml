@@ -1,0 +1,7 @@
+variant = "loose"
+
+[[issues]]
+file = "src/Middleware/MessageHandlerMiddleware.php"
+code = "string-member-selector"
+message = "This member selector uses a non-literal string type (`string`); its specific value cannot be statically determined."
+count = 1

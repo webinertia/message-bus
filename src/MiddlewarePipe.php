@@ -42,14 +42,14 @@ final class MiddlewarePipe implements MiddlewarePipelineInterface
     /**
      * Middleware invocation.
      *
-     * Executes the internal pipeline, passing $handler as the "final handler".
+     * Executes the internal pipeline, passing $next as the "final handler".
      * If this looks familiar it's because it works almost exactly like Mezzio.
      * Which is intentional.
      */
     #[Override]
-    public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+    public function process(MessageInterface $message, PipelineHandlerInterface $next): ResultInterface
     {
-        return new Next($this->pipeline, $handler)->handle($message);
+        return new Next($this->pipeline, $next)->handle($message);
     }
 
     /**

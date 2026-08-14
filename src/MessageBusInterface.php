@@ -7,4 +7,4 @@ namespace Webware\MessageBus;
 /**
  * @api
  */
-interface MessageBusInterface extends MessageHandlerInterface {}
+interface MessageBusInterface extends PipelineHandlerInterface {}

@@ -14,11 +14,11 @@ use ReflectionClass;
 use ReflectionException;
 use SplQueue;
 use Webware\MessageBus\Exception\MessageException;
-use Webware\MessageBus\MessageHandlerInterface;
 use Webware\MessageBus\MessageInterface;
 use Webware\MessageBus\MiddlewareInterface;
 use Webware\MessageBus\MiddlewarePipe;
 use Webware\MessageBus\MiddlewarePipelineInterface;
+use Webware\MessageBus\PipelineHandlerInterface;
 use Webware\MessageBus\ResultInterface;
 
 #[CoversClass(MiddlewarePipe::class)]
@@ -80,7 +80,7 @@ final class MiddlewarePipeTest extends TestCase
     #[Test]
     public function handleMethodExists(): void
     {
-        static::assertInstanceOf(MessageHandlerInterface::class, $this->middlewarePipe);
+        static::assertInstanceOf(PipelineHandlerInterface::class, $this->middlewarePipe);
     }
 
     #[Test]
@@ -129,7 +129,7 @@ final class MiddlewarePipeTest extends TestCase
             ->method('process')
             ->with(
                 $this->command,
-                static::isInstanceOf(MessageHandlerInterface::class),
+                static::isInstanceOf(PipelineHandlerInterface::class),
             )
             ->willReturn($expectedResult);
 
@@ -167,7 +167,7 @@ final class MiddlewarePipeTest extends TestCase
     {
         static::assertInstanceOf(MiddlewarePipelineInterface::class, $this->middlewarePipe);
         static::assertInstanceOf(MiddlewareInterface::class, $this->middlewarePipe);
-        static::assertInstanceOf(MessageHandlerInterface::class, $this->middlewarePipe);
+        static::assertInstanceOf(PipelineHandlerInterface::class, $this->middlewarePipe);
     }
 
     /**
@@ -213,7 +213,7 @@ final class MiddlewarePipeTest extends TestCase
         $middleware1 = $this->createStub(MiddlewareInterface::class);
         $middleware2 = new class() implements MiddlewareInterface {
             #[Override]
-            public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+            public function process(MessageInterface $message, PipelineHandlerInterface $handler): ResultInterface
             {
                 return $handler->handle($message);
             }
@@ -340,13 +340,13 @@ final class MiddlewarePipeTest extends TestCase
             ->method('process')
             ->with(
                 $this->command,
-                static::isInstanceOf(MessageHandlerInterface::class),
+                static::isInstanceOf(PipelineHandlerInterface::class),
             )
             ->willReturn($expectedResult);
 
         $this->middlewarePipe->pipe($middleware);
 
-        $handler = $this->createStub(MessageHandlerInterface::class);
+        $handler = $this->createStub(PipelineHandlerInterface::class);
         $result  = $this->middlewarePipe->process($this->command, $handler);
 
         static::assertSame($expectedResult, $result);
@@ -364,7 +364,7 @@ final class MiddlewarePipeTest extends TestCase
             ) {}
 
             #[Override]
-            public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+            public function process(MessageInterface $message, PipelineHandlerInterface $handler): ResultInterface
             {
                 $this->executionOrder[] = 'middleware1';
 
@@ -380,7 +380,7 @@ final class MiddlewarePipeTest extends TestCase
             ) {}
 
             #[Override]
-            public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+            public function process(MessageInterface $message, PipelineHandlerInterface $handler): ResultInterface
             {
                 $this->executionOrder[] = 'middleware2';
 
@@ -418,13 +418,13 @@ final class MiddlewarePipeTest extends TestCase
     }
 
     /**
-     * `MessageHandlerInterface` is a marker interface, so a stub/mock of it cannot
+     * `PipelineHandlerInterface` is a marker interface, so a stub/mock of it cannot
      * have its `handle()` method configured. A concrete anonymous implementation
      * is used instead.
      */
-    private function createHandler(Closure $callback): MessageHandlerInterface
+    private function createHandler(Closure $callback): PipelineHandlerInterface
     {
-        return new class($callback) implements MessageHandlerInterface {
+        return new class($callback) implements PipelineHandlerInterface {
             public function __construct(
                 private readonly Closure $callback,
             ) {}

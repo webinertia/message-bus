@@ -10,6 +10,7 @@ use Webware\MessageBus\MessageBus;
 use Webware\MessageBus\MessageBusInterface;
 use Webware\MessageBus\Middleware\MessageHandlerMiddleware;
 use Webware\MessageBus\MiddlewarePipe;
+use Webware\MessageBus\Strategy\HandleStrategy;
 use Webware\MessageBusBench\Fixtures\BenchCommand;
 use Webware\MessageBusBench\Fixtures\BenchCommandHandler;
 use Webware\MessageBusBench\Fixtures\PassthroughMiddleware;
@@ -58,7 +59,7 @@ final class MiddlewarePipeBench
         }
 
         $resolver = new StaticHandlerResolver(new BenchCommandHandler());
-        $pipeline->pipe(new MessageHandlerMiddleware($resolver));
+        $pipeline->pipe(new MessageHandlerMiddleware($resolver, new HandleStrategy()));
 
         $this->bus     = new MessageBus($pipeline);
         $this->command = new BenchCommand();

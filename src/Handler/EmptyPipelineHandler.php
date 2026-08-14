@@ -6,14 +6,14 @@ namespace Webware\MessageBus\Handler;
 
 use Override;
 use Webware\MessageBus\Exception\MessageException;
-use Webware\MessageBus\MessageHandlerInterface;
 use Webware\MessageBus\MessageInterface;
+use Webware\MessageBus\PipelineHandlerInterface;
 use Webware\MessageBus\ResultInterface;
 
 /**
  * @internal
  */
-final readonly class EmptyPipelineHandler implements MessageHandlerInterface
+final readonly class EmptyPipelineHandler implements PipelineHandlerInterface
 {
     /**
      * @throws MessageException

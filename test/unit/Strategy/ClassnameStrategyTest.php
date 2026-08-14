@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Webware\MessageBusTest\Strategy;
+
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+use Webware\MessageBus\Strategy\ClassnameStrategy;
+use Webware\MessageBus\StrategyInterface;
+use Webware\MessageBusTest\TestAssets\CreateUser;
+
+#[CoversClass(ClassnameStrategy::class)]
+final class ClassnameStrategyTest extends TestCase
+{
+    #[Test]
+    public function implementsStrategyInterface(): void
+    {
+        static::assertInstanceOf(StrategyInterface::class, new ClassnameStrategy());
+    }
+
+    #[Test]
+    public function matchInflectsMessageShortClassName(): void
+    {
+        $strategy = new ClassnameStrategy();
+
+        static::assertSame('createUser', $strategy->match(new CreateUser()));
+    }
+}

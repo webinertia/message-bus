@@ -27,7 +27,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
      * @throws ServiceNotFoundException
      */
     #[Override]
-    public function resolve(MessageInterface $message): MessageHandlerInterface
+    public function resolve(MessageInterface $message): CommandHandlerInterface|QueryHandlerInterface
     {
         if (! $this->container->has('config')) {
             throw ServiceNotFoundException::fromService('config');
@@ -74,7 +74,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
      * @throws ContainerExceptionInterface
      * @throws InvalidConfigurationException
      */
-    public function __invoke(MessageInterface $message): MessageHandlerInterface
+    public function __invoke(MessageInterface $message): CommandHandlerInterface|QueryHandlerInterface
     {
         return $this->resolve($message);
     }

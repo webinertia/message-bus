@@ -57,6 +57,8 @@ container alias change — no handler, resolver, or middleware change.
 - [MessageHandlerInterface refactor](./message-handler-interface-refactor.md) — renaming the
   pipeline continuation contract.
 - [Decisions](./decisions.md) — remaining open questions.
+- [Refactor plan](./refactor-plan.md) — staged, verifiable plan to implement the 2.0 design.
+- [Upgrade notes](./upgrade-notes.md) — consumer-facing 1.1.x → 2.0.0 breaking changes.
 
 ## Headline conclusions
 

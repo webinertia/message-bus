@@ -204,7 +204,6 @@ final class MessageHandlerResolverTest extends TestCase
                 private readonly mixed $resultValue,
             ) {}
 
-            #[Override]
             public function handle(MessageInterface $message): ResultInterface
             {
                 Type\instance_of(CommandInterface::class)->assert($message);
@@ -221,7 +220,6 @@ final class MessageHandlerResolverTest extends TestCase
                 private readonly mixed $resultValue,
             ) {}
 
-            #[Override]
             public function handle(MessageInterface $message): ResultInterface
             {
                 Type\instance_of(QueryInterface::class)->assert($message);

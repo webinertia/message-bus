@@ -54,6 +54,7 @@ final readonly class ConfigProvider
                 MessageBusInterface::class             => MessageBus::class,
                 MiddlewarePipelineInterface::class     => MiddlewarePipe::class,
                 MessageHandlerResolverInterface::class => MessageHandlerResolver::class,
+                StrategyInterface::class               => Strategy\HandleStrategy::class,
             ],
             'factories'  => [
                 MessageBus::class                          => Container\MessageBusFactory::class,
@@ -63,6 +64,8 @@ final readonly class ConfigProvider
             ],
             'invokables' => [
                 Handler\EmptyPipelineHandler::class => Handler\EmptyPipelineHandler::class,
+                Strategy\HandleStrategy::class      => Strategy\HandleStrategy::class,
+                Strategy\ClassnameStrategy::class   => Strategy\ClassnameStrategy::class,
             ],
         ];
     }

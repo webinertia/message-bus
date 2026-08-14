@@ -14,16 +14,24 @@ use Psr\Container\ContainerInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use ReflectionClass;
 use ReflectionException;
+use Webware\MessageBus\Command\CommandInterface;
+use Webware\MessageBus\Command\CommandResult;
+use Webware\MessageBus\CommandHandlerInterface;
 use Webware\MessageBus\ConfigProvider;
 use Webware\MessageBus\Container\MiddlewarePipeFactory;
 use Webware\MessageBus\Exception\InvalidConfigurationException;
 use Webware\MessageBus\Exception\ServiceNotFoundException;
 use Webware\MessageBus\MessageBusInterface;
+use Webware\MessageBus\MessageHandlerResolver;
 use Webware\MessageBus\MessageInterface;
+use Webware\MessageBus\MessageStatus;
+use Webware\MessageBus\Middleware\MessageHandlerMiddleware;
 use Webware\MessageBus\MiddlewareInterface;
 use Webware\MessageBus\MiddlewarePipe;
 use Webware\MessageBus\MiddlewarePipelineInterface;
+use Webware\MessageBus\PipelineHandlerInterface;
 use Webware\MessageBus\ResultInterface;
+use Webware\MessageBus\Strategy\HandleStrategy;
 
 /**
  * @mago-expect lint:kan-defect
@@ -148,6 +156,80 @@ final class MiddlewarePipeFactoryTest extends TestCase
      * @throws ContainerExceptionInterface
      */
     #[Test]
+    public function invokePipesMiddlewareInPriorityOrder(): void
+    {
+        $config = [
+            MessageBusInterface::class => [
+                ConfigProvider::MIDDLEWARE_PIPELINE_KEY => [
+                    // Declared first, but lower priority: must run second.
+                    ['middleware' => 'LowPriority', 'priority' => 1],
+                    // Declared second, but higher priority: must run first.
+                    ['middleware' => 'HighPriority', 'priority' => 10],
+                ],
+            ],
+        ];
+
+        $executionOrder = [];
+
+        $lowPriority = new class($executionOrder) implements MiddlewareInterface {
+            /** @param array<string> $executionOrder */
+            public function __construct(
+                private array &$executionOrder,
+            ) {}
+
+            #[Override]
+            public function process(MessageInterface $message, PipelineHandlerInterface $next): ResultInterface
+            {
+                $this->executionOrder[] = 'low';
+
+                return $next->handle($message);
+            }
+        };
+
+        $highPriority = new class($executionOrder) implements MiddlewareInterface {
+            /** @param array<string> $executionOrder */
+            public function __construct(
+                private array &$executionOrder,
+            ) {}
+
+            #[Override]
+            public function process(MessageInterface $message, PipelineHandlerInterface $next): ResultInterface
+            {
+                $this->executionOrder[] = 'high';
+
+                return $next->handle($message);
+            }
+        };
+
+        $this->container->method('has')
+            ->willReturnCallback(static fn($service) => match ($service) {
+                'config', 'LowPriority', 'HighPriority' => true,
+                default                                 => false,
+            });
+
+        $this->container->method('get')
+            ->willReturnCallback(static fn($service) => match ($service) {
+                'config'       => $config,
+                'LowPriority'  => $lowPriority,
+                'HighPriority' => $highPriority,
+                default        => null,
+            });
+
+        $pipeline = ($this->factory)($this->container);
+        $message  = $this->createStub(ResultInterface::class);
+
+        $result = $pipeline->handle($message);
+
+        static::assertSame($message, $result);
+        static::assertSame(['high', 'low'], $executionOrder);
+    }
+
+    /**
+     * @throws ServiceNotFoundException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
+    #[Test]
     public function invokePipesResolvedMiddlewareIntoTheResultingPipeline(): void
     {
         $config = [
@@ -218,6 +300,124 @@ final class MiddlewarePipeFactoryTest extends TestCase
 
         static::assertInstanceOf(MiddlewarePipelineInterface::class, $result);
         static::assertInstanceOf(MiddlewarePipe::class, $result);
+    }
+
+    /**
+     * @throws ServiceNotFoundException
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
+     */
+    #[Test]
+    public function invokeRunsEarlyMiddlewareBeforeHandlerAndLateMiddlewareAfter(): void
+    {
+        $trace   = [];
+        $command = new class() implements CommandInterface {};
+
+        $handler = new class($trace) implements CommandHandlerInterface {
+            /** @param array<string> $trace */
+            public function __construct(
+                private array &$trace,
+            ) {}
+
+            public function handle(CommandInterface $message): ResultInterface
+            {
+                $this->trace[] = 'handler';
+
+                return new CommandResult($message, MessageStatus::Success, 'handled');
+            }
+        };
+
+        $resolverContainer = $this->createStub(ContainerInterface::class);
+        $resolverContainer->method('has')
+            ->willReturnCallback(
+                static fn(string $service): bool => match ($service) {
+                    'config', $handler::class => true,
+                    default                   => false,
+                },
+            );
+        $resolverContainer->method('get')
+            ->willReturnCallback(
+                static fn(string $service): mixed => match ($service) {
+                    'config' => [
+                        MessageBusInterface::class => [
+                            ConfigProvider::QUERY_MAP_KEY   => [],
+                            ConfigProvider::COMMAND_MAP_KEY => [
+                                $command::class => $handler::class,
+                            ],
+                        ],
+                    ],
+                    $handler::class => $handler,
+                    default         => null,
+                },
+            );
+
+        $resolver          = new MessageHandlerResolver($resolverContainer);
+        $handlerMiddleware = new MessageHandlerMiddleware($resolver, new HandleStrategy());
+
+        $early = new class($trace) implements MiddlewareInterface {
+            /** @param array<string> $trace */
+            public function __construct(
+                private array &$trace,
+            ) {}
+
+            #[Override]
+            public function process(MessageInterface $message, PipelineHandlerInterface $next): ResultInterface
+            {
+                $this->trace[] = 'early';
+
+                return $next->handle($message);
+            }
+        };
+
+        $late = new class($trace) implements MiddlewareInterface {
+            /** @param array<string> $trace */
+            public function __construct(
+                private array &$trace,
+            ) {}
+
+            #[Override]
+            public function process(MessageInterface $message, PipelineHandlerInterface $next): ResultInterface
+            {
+                $this->trace[] = 'late';
+
+                return $next->handle($message);
+            }
+        };
+
+        $config = [
+            MessageBusInterface::class => [
+                ConfigProvider::MIDDLEWARE_PIPELINE_KEY => [
+                    ['middleware' => 'EarlyMiddleware', 'priority' => 100],
+                    ['middleware' => MessageHandlerMiddleware::class, 'priority' => 1],
+                    ['middleware' => 'LateMiddleware', 'priority' => -1],
+                ],
+            ],
+        ];
+
+        $this->container->method('has')
+            ->willReturnCallback(
+                static fn($service) => match ($service) {
+                    'config', 'EarlyMiddleware', 'LateMiddleware', MessageHandlerMiddleware::class => true,
+                    default                                                                        => false,
+                },
+            );
+        $this->container->method('get')
+            ->willReturnCallback(
+                static fn($service) => match ($service) {
+                    'config'                        => $config,
+                    'EarlyMiddleware'               => $early,
+                    'LateMiddleware'                => $late,
+                    MessageHandlerMiddleware::class => $handlerMiddleware,
+                    default                         => null,
+                },
+            );
+
+        $pipeline = ($this->factory)($this->container);
+
+        $result = $pipeline->handle($command);
+
+        static::assertInstanceOf(ResultInterface::class, $result);
+        static::assertSame(['early', 'handler', 'late'], $trace);
     }
 
     /**

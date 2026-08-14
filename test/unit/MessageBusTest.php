@@ -16,10 +16,10 @@ use ReflectionException;
 use Webware\MessageBus\Exception\MessageException;
 use Webware\MessageBus\MessageBus;
 use Webware\MessageBus\MessageBusInterface;
-use Webware\MessageBus\MessageHandlerInterface;
 use Webware\MessageBus\MessageInterface;
 use Webware\MessageBus\MiddlewareInterface;
 use Webware\MessageBus\MiddlewarePipe;
+use Webware\MessageBus\PipelineHandlerInterface;
 use Webware\MessageBus\ResultInterface;
 
 #[CoversClass(MessageBus::class)]
@@ -79,7 +79,7 @@ final class MessageBusTest extends TestCase
             ) {}
 
             #[Override]
-            public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+            public function process(MessageInterface $message, PipelineHandlerInterface $handler): ResultInterface
             {
                 return $this->result;
             }
@@ -108,7 +108,7 @@ final class MessageBusTest extends TestCase
                 #[Override]
                 public function process(
                     MessageInterface $message,
-                    MessageHandlerInterface $handler,
+                    PipelineHandlerInterface $handler,
                 ): ResultInterface {
                     $this->capturedMessage = $message;
 
@@ -134,7 +134,7 @@ final class MessageBusTest extends TestCase
             ) {}
 
             #[Override]
-            public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+            public function process(MessageInterface $message, PipelineHandlerInterface $handler): ResultInterface
             {
                 return $this->result;
             }
@@ -162,7 +162,7 @@ final class MessageBusTest extends TestCase
             ) {}
 
             #[Override]
-            public function process(MessageInterface $message, MessageHandlerInterface $handler): ResultInterface
+            public function process(MessageInterface $message, PipelineHandlerInterface $handler): ResultInterface
             {
                 return $this->result;
             }

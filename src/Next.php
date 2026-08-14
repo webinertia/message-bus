@@ -10,7 +10,7 @@ use Webware\MessageBus\Exception\NextHandlerAlreadyCalledException;
 use Webware\MessageBus\Handler\EmptyPipelineHandler;
 
 /** @internal */
-final class Next implements MessageHandlerInterface
+final class Next implements PipelineHandlerInterface
 {
     /** @var SplQueue<MiddlewareInterface> */
     private ?SplQueue $queue;
@@ -22,7 +22,7 @@ final class Next implements MessageHandlerInterface
      */
     public function __construct(
         SplQueue $queue,
-        private MessageHandlerInterface $emptyPipelineHandler = new EmptyPipelineHandler(),
+        private PipelineHandlerInterface $emptyPipelineHandler = new EmptyPipelineHandler(),
     ) {
         $this->queue = clone $queue;
     }

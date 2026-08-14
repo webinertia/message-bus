@@ -9,6 +9,6 @@ interface MiddlewareInterface
 {
     public function process(
         MessageInterface $message,
-        MessageHandlerInterface $handler,
+        PipelineHandlerInterface $next,
     ): ResultInterface;
 }

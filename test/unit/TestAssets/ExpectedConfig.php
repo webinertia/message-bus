@@ -13,6 +13,9 @@ use Webware\MessageBus\MessageHandlerResolverInterface;
 use Webware\MessageBus\Middleware\MessageHandlerMiddleware;
 use Webware\MessageBus\MiddlewarePipe;
 use Webware\MessageBus\MiddlewarePipelineInterface;
+use Webware\MessageBus\Strategy\ClassnameStrategy;
+use Webware\MessageBus\Strategy\HandleStrategy;
+use Webware\MessageBus\StrategyInterface;
 
 final class ExpectedConfig
 {
@@ -25,6 +28,7 @@ final class ExpectedConfig
             MessageBusInterface::class             => MessageBus::class,
             MiddlewarePipelineInterface::class     => MiddlewarePipe::class,
             MessageHandlerResolverInterface::class => MessageHandlerResolver::class,
+            StrategyInterface::class               => HandleStrategy::class,
         ];
     }
 
@@ -64,6 +68,8 @@ final class ExpectedConfig
     {
         return [
             EmptyPipelineHandler::class => EmptyPipelineHandler::class,
+            HandleStrategy::class       => HandleStrategy::class,
+            ClassnameStrategy::class    => ClassnameStrategy::class,
         ];
     }
 

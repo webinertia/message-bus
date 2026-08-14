@@ -10,6 +10,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use Webware\MessageBus\MessageHandlerResolverInterface;
 use Webware\MessageBus\Middleware\MessageHandlerMiddleware;
 use Webware\MessageBus\MiddlewareInterface;
+use Webware\MessageBus\StrategyInterface;
 
 /**
  * @internal
@@ -24,7 +25,8 @@ final readonly class MessageHandlerMiddlewareFactory
         ContainerInterface $container,
     ): MiddlewareInterface&MessageHandlerMiddleware {
         $resolver = $container->get(MessageHandlerResolverInterface::class);
+        $strategy = $container->get(StrategyInterface::class);
 
-        return new MessageHandlerMiddleware($resolver);
+        return new MessageHandlerMiddleware($resolver, $strategy);
     }
 }

@@ -98,6 +98,8 @@ invalid-open-tag = { level = "Help" }
 [analyzer]
 excludes = ["test"]
 plugins = ["psl", "psr-container"]
+baseline = "analysis-baseline.toml"
+baseline-variant = "loose"
 find-unused-definitions = true
 find-unused-expressions = true
 find-overly-wide-return-types = true

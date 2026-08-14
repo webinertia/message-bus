@@ -11,8 +11,8 @@ use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Webware\MessageBus\Exception\MessageException;
 use Webware\MessageBus\Handler\EmptyPipelineHandler;
-use Webware\MessageBus\MessageHandlerInterface;
 use Webware\MessageBus\MessageInterface;
+use Webware\MessageBus\PipelineHandlerInterface;
 use Webware\MessageBus\ResultInterface;
 
 #[CoversClass(EmptyPipelineHandler::class)]
@@ -58,7 +58,7 @@ final class EmptyPipelineHandlerTest extends TestCase
     #[Test]
     public function handleMethodExistsAndIsCallable(): void
     {
-        static::assertInstanceOf(MessageHandlerInterface::class, $this->handler);
+        static::assertInstanceOf(PipelineHandlerInterface::class, $this->handler);
     }
 
     #[Test]
@@ -70,9 +70,9 @@ final class EmptyPipelineHandlerTest extends TestCase
     }
 
     #[Test]
-    public function handlerImplementsMessageHandlerInterface(): void
+    public function handlerImplementsPipelineHandlerInterface(): void
     {
-        static::assertInstanceOf(MessageHandlerInterface::class, $this->handler);
+        static::assertInstanceOf(PipelineHandlerInterface::class, $this->handler);
     }
 
     #[Test]
