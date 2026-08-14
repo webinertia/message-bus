@@ -34,6 +34,26 @@ jobs:
             echo "has_tag=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # BC is only a contract within a major line. A new major (e.g. 2.0.x vs the
+      # latest 1.x tag) breaks intentionally, so skip the check until the first
+      # tag on that major line exists.
+      - name: Detect latest tag major
+        id: tag-major
+        run: |
+          latest=$(git tag -l | grep -E '^[1-9][0-9]*\.[0-9]+\.[0-9]+$' | sort -V | tail -n1)
+          echo "major=${latest%%.*}" >> "$GITHUB_OUTPUT"
+
+      - name: Detect current line major
+        id: line-major
+        run: |
+          if [ -n "$GITHUB_BASE_REF" ]; then
+            ref="$GITHUB_BASE_REF"
+          else
+            ref="$GITHUB_REF_NAME"
+          fi
+          ref="${ref#v}"
+          echo "major=${ref%%.*}" >> "$GITHUB_OUTPUT"
+
       - name: Check for BC breaks
-        if: steps.tag-check.outputs.has_tag == 'true'
+        if: steps.tag-check.outputs.has_tag == 'true' && steps.tag-major.outputs.major == steps.line-major.outputs.major
         run: vendor/bin/roave-backward-compatibility-check --format=github-actions

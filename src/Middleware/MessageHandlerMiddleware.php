@@ -39,7 +39,7 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
         PipelineHandlerInterface $next,
     ): ResultInterface {
         $resolved = $this->resolver->resolve($message);
-        $method   = $this->strategy->match($message);
+        $method   = $this->strategy->handlerMethod($message);
 
         if (! is_callable([$resolved, $method])) {
             throw HandlerMethodNotFoundException::forMethod($resolved, $method);

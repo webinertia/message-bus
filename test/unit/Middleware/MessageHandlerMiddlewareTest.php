@@ -67,7 +67,7 @@ final class MessageHandlerMiddlewareTest extends TestCase
             ->willReturn($this->messageHandler);
 
         $strategy->expects($this->once())
-            ->method('match')
+            ->method('handlerMethod')
             ->with(static::identicalTo($this->message))
             ->willReturn('handle');
 
@@ -121,7 +121,7 @@ final class MessageHandlerMiddlewareTest extends TestCase
         $strategy   = $this->createStub(StrategyInterface::class);
         $middleware = new MessageHandlerMiddleware($this->resolver, $strategy);
 
-        $strategy->method('match')->willReturn('missingMethod');
+        $strategy->method('handlerMethod')->willReturn('missingMethod');
 
         $this->resolver->method('resolve')->willReturn($this->messageHandler);
 

@@ -12,7 +12,7 @@ Implement the V2 design end-to-end:
 - `StrategyInterface` + shipped `HandleStrategy` (default) and `ClassnameStrategy` (opt-in).
 - `CommandHandlerInterface` / `QueryHandlerInterface` become markers (no forced `handle()`).
 - `MessageHandlerInterface` renamed to `PipelineHandlerInterface` (pipeline machinery only).
-- Resolver returns the markers; middleware dispatches through `$strategy->match($message)`.
+- Resolver returns the markers; middleware dispatches through `$strategy->handlerMethod($message)`.
 - New `HandlerMethodNotFoundException`.
 - Container wiring for the strategy.
 
@@ -79,11 +79,11 @@ Nothing is wired yet, so existing behavior is untouched.
 **Changes — `src/`:**
 
 - `src/StrategyInterface.php` — `Webware\MessageBus\StrategyInterface` (`@api`):
-  `public function match(MessageInterface $message): string;`
+  `public function handlerMethod(MessageInterface $message): string;`
 - `src/Strategy/HandleStrategy.php` — `Webware\MessageBus\Strategy\HandleStrategy`
-  (`final readonly`, `#[Override]` on `match()`), returns `'handle'`.
+  (`final readonly`, `#[Override]` on `handlerMethod()`), returns `'handle'`.
 - `src/Strategy/ClassnameStrategy.php` — `Webware\MessageBus\Strategy\ClassnameStrategy`
-  (`final readonly`, `#[Override]` on `match()`), returns `lcfirst(short class name)`.
+  (`final readonly`, `#[Override]` on `handlerMethod()`), returns `lcfirst(short class name)`.
   Import functions: `use function lcfirst; use function strrpos; use function substr;`
   (mago `no-fully-qualified-global-function`).
 
@@ -92,9 +92,9 @@ Nothing is wired yet, so existing behavior is untouched.
 - `test/unit/TestAssets/CreateUser.php` — fixture message
   `Webware\MessageBusTest\TestAssets\CreateUser implements CommandInterface` (empty class).
 - `test/unit/Strategy/HandleStrategyTest.php` — `Webware\MessageBusTest\Strategy\HandleStrategyTest`:
-  `match()` returns `'handle'` for a `MessageInterface` stub.
+  `handlerMethod()` returns `'handle'` for a `MessageInterface` stub.
 - `test/unit/Strategy/ClassnameStrategyTest.php` —
-  `Webware\MessageBusTest\Strategy\ClassnameStrategyTest`: `match(new CreateUser()) === 'createUser'`;
+  `Webware\MessageBusTest\Strategy\ClassnameStrategyTest`: `handlerMethod(new CreateUser()) === 'createUser'`;
   covers namespaced short-name inflection.
 
 **Verification:**
@@ -235,7 +235,7 @@ strategy's name."
   - `process()`:
     ```php
     $resolved = $this->resolver->resolve($message);
-    $method   = $this->strategy->match($message);
+    $method   = $this->strategy->handlerMethod($message);
 
     if (! is_callable([$resolved, $method])) {
         throw HandlerMethodNotFoundException::forMethod($resolved, $method);
@@ -256,7 +256,7 @@ strategy's name."
 
 - `test/unit/Middleware/MessageHandlerMiddlewareTest.php`:
   - construct the middleware with a strategy (`new HandleStrategy()` or a stub).
-  - add: `processCallsStrategyWithCorrectMessage()` (strategy mock `match()` called once with
+  - add: `processCallsStrategyWithCorrectMessage()` (strategy mock `handlerMethod()` called once with
     the message).
   - add: `processThrowsHandlerMethodNotFoundExceptionWhenMethodMissing()` (strategy returns a
     name the resolved handler lacks).

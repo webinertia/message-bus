@@ -11,7 +11,7 @@ use Webware\MessageBus\StrategyInterface;
 final readonly class HandleStrategy implements StrategyInterface
 {
     #[Override]
-    public function match(MessageInterface $message): string
+    public function handlerMethod(MessageInterface $message): string
     {
         return 'handle';
     }

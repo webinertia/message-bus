@@ -15,16 +15,16 @@ use Webware\MessageBusTest\TestAssets\CreateUser;
 final class ClassnameStrategyTest extends TestCase
 {
     #[Test]
-    public function implementsStrategyInterface(): void
-    {
-        static::assertInstanceOf(StrategyInterface::class, new ClassnameStrategy());
-    }
-
-    #[Test]
-    public function matchInflectsMessageShortClassName(): void
+    public function handlerMethodInflectsMessageShortClassName(): void
     {
         $strategy = new ClassnameStrategy();
 
-        static::assertSame('createUser', $strategy->match(new CreateUser()));
+        static::assertSame('createUser', $strategy->handlerMethod(new CreateUser()));
+    }
+
+    #[Test]
+    public function implementsStrategyInterface(): void
+    {
+        static::assertInstanceOf(StrategyInterface::class, new ClassnameStrategy());
     }
 }

@@ -15,7 +15,7 @@ use function substr;
 final readonly class ClassnameStrategy implements StrategyInterface
 {
     #[Override]
-    public function match(MessageInterface $message): string
+    public function handlerMethod(MessageInterface $message): string
     {
         $fqcn      = $message::class;
         $position  = strrpos($fqcn, needle: '\\');

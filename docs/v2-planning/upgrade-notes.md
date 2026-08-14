@@ -30,7 +30,7 @@ Consumer-facing breaking changes introduced by the resolver + strategy refactor.
 - `Webware\MessageBus\Middleware\MessageHandlerMiddleware::__construct()` now takes a second
   argument: `StrategyInterface $strategy`. It is wired by the container, not constructed manually
   in typical use.
-- `Webware\MessageBus\StrategyInterface` is new (`@api`), with `match(MessageInterface $message):
+- `Webware\MessageBus\StrategyInterface` is new (`@api`), with `handlerMethod(MessageInterface $message):
   string`. Two implementations ship:
   - `Webware\MessageBus\Strategy\HandleStrategy` (default) — returns `'handle'`.
   - `Webware\MessageBus\Strategy\ClassnameStrategy` (opt-in) — inflects the message short class

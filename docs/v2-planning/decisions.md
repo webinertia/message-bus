@@ -2,7 +2,7 @@
 
 ## Settled (direction)
 
-1. Strategy owns method-name derivation — `match()` has total control.
+1. Strategy owns method-name derivation — `handlerMethod()` has total control.
 2. Shipped default: `HandleStrategy` (`'handle'`).
 3. Shipped alternative: `ClassnameStrategy` (inflect from short class name, `lcfirst`),
    opt-in by changing one container alias.

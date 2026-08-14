@@ -17,7 +17,7 @@ $result = $this->resolver->resolve($message)->handle($message);
 to
 
 ```php
-$result = $this->resolver->resolve($message)->{$this->strategy->match($message)};
+$result = $this->resolver->resolve($message)->{$this->strategy->handlerMethod($message)};
 ```
 
 Removing BC frees us to add the strategy seam, change the handler contracts, and redesign
@@ -28,7 +28,7 @@ need it.
 
 ## The strategy seam is the whole point
 
-`StrategyInterface::match()` is the sole authority for choosing the method name. The
+`StrategyInterface::handlerMethod()` is the sole authority for choosing the method name. The
 framework ships two strategies, and the application picks one purely by wiring:
 
 - `HandleStrategy` (default) — returns `'handle'`. Today's behavior, behind a seam.
@@ -39,7 +39,7 @@ container alias change — no handler, resolver, or middleware change.
 
 ## What V2 settles
 
-1. Strategy owns method-name derivation — `match()` has total control.
+1. Strategy owns method-name derivation — `handlerMethod()` has total control.
 2. Shipped default: `HandleStrategy` (handle-based handlers keep working).
 3. Shipped alternative: `ClassnameStrategy` (named methods), opt-in via wiring.
 4. `CommandHandlerInterface`/`QueryHandlerInterface` become markers — no forced `handle()`.

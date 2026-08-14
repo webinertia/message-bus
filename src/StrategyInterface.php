@@ -7,5 +7,5 @@ namespace Webware\MessageBus;
 /** @api */
 interface StrategyInterface
 {
-    public function match(MessageInterface $message): string;
+    public function handlerMethod(MessageInterface $message): string;
 }

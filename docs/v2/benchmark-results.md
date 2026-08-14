@@ -18,7 +18,7 @@ This runs `phpbench run --report=aggregate` using [`phpbench.json.dist`](../../p
 - **`MiddlewarePipeBench`** — dispatches a command through `MessageBus` -> `MiddlewarePipe` with a
   single pass-through middleware ahead of the terminal `MessageHandlerMiddleware`. Handler resolution
   is stubbed with a static resolver wired to the default `HandleStrategy`, so the number isolates the
-  cost of pipeline traversal plus the strategy seam (`StrategyInterface::match()`, the `is_callable()`
+  cost of pipeline traversal plus the strategy seam (`StrategyInterface::handlerMethod()`, the `is_callable()`
   guard, and dynamic dispatch).
 - **`MessageBusDispatchBench`** — the total cost of handling a command end-to-end through a
   container-backed setup (Laminas `ServiceManager`), including real `MessageHandlerResolver`
@@ -35,7 +35,7 @@ Recorded on 2026-08-13, PHP 8.4.24 (Linux x86_64, WSL2), 1000 revolutions / 5 it
 | `MessageBusDispatchBench` | benchHandle | 5 middleware | 7.209593  | ±2.70%  |
 
 V2 adds the strategy seam to `MessageHandlerMiddleware`: resolve the handler, call
-`StrategyInterface::match()`, guard the name with `is_callable()`, dispatch through the dynamic
+`StrategyInterface::handlerMethod()`, guard the name with `is_callable()`, dispatch through the dynamic
 method call, and coerce the result to `ResultInterface`. The 1-middleware dispatch figure carries a
 wide ±8.65% RStDev, so treat that single delta as indicative rather than precise.
 

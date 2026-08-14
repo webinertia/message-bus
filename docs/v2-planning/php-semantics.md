@@ -17,7 +17,7 @@ $o->{$name};            // dynamic PROPERTY read — not a call
 - `$o->{$name}` with no parentheses reads a property. Observed: `Undefined property` warning
   plus `null`; on a `final readonly` object the same read still warns and returns `null`
   (writes would be `Error: Cannot create dynamic property ...`).
-- Therefore the proposal's literal `->{$strategy->match($message)};` is property access. The
+- Therefore the proposal's literal `->{$strategy->handlerMethod($message)};` is property access. The
   intended behavior needs `($message)` or `(...)`.
 
 ## First Class Callable Syntax (PHP 8.1+)
@@ -53,12 +53,6 @@ is_callable([$h, 'anything']);   // true
 V2's middleware guard uses `is_callable`, because it must accept both real methods and
 `__call`-backed handlers. The asymmetry also means `is_callable` is a weaker guarantee than
 "a typed method exists" — it is a callability check, not a signature check.
-
-## `match` as a method name
-
-`match` is a keyword (match expression) but semi-reserved as a method name. Both
-`$o->match($x)` and `$o->{'match'}($x)` compile and run. `StrategyInterface::match()` is
-legal syntax.
 
 ## Runtime error modes
 

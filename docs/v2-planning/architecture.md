@@ -85,11 +85,11 @@ namespace Webware\MessageBus;
 /** @api */
 interface StrategyInterface
 {
-    public function match(MessageInterface $message): string;
+    public function handlerMethod(MessageInterface $message): string;
 }
 ```
 
-`match()` is the sole authority for choosing the handler method name. The middleware only
+`handlerMethod()` is the sole authority for choosing the handler method name. The middleware only
 depends on `StrategyInterface`; it never knows which concrete strategy is wired.
 
 ## Shipped strategy 1 — `HandleStrategy` (default)
@@ -102,7 +102,7 @@ use Webware\MessageBus\StrategyInterface;
 
 final readonly class HandleStrategy implements StrategyInterface
 {
-    public function match(MessageInterface $message): string
+    public function handlerMethod(MessageInterface $message): string
     {
         return 'handle';
     }
@@ -123,7 +123,7 @@ use Webware\MessageBus\StrategyInterface;
 
 final readonly class ClassnameStrategy implements StrategyInterface
 {
-    public function match(MessageInterface $message): string
+    public function handlerMethod(MessageInterface $message): string
     {
         $fqcn = $message::class;
 
@@ -165,7 +165,7 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
         PipelineHandlerInterface $next,
     ): ResultInterface {
         $resolved = $this->resolver->resolve($message);
-        $method   = $this->strategy->match($message);
+        $method   = $this->strategy->handlerMethod($message);
 
         if (! is_callable([$resolved, $method])) {
             throw HandlerMethodNotFoundException::forMethod($resolved, $method);
@@ -181,7 +181,7 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
 The proposal's one-line form, made explicit:
 
 ```php
-$result = $this->resolver->resolve($message)->{$this->strategy->match($message)}($message);
+$result = $this->resolver->resolve($message)->{$this->strategy->handlerMethod($message)}($message);
 ```
 
 The `is_callable` guard is now **required on every path** — the marker contract guarantees

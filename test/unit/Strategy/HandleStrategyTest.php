@@ -15,17 +15,17 @@ use Webware\MessageBus\StrategyInterface;
 final class HandleStrategyTest extends TestCase
 {
     #[Test]
-    public function implementsStrategyInterface(): void
-    {
-        static::assertInstanceOf(StrategyInterface::class, new HandleStrategy());
-    }
-
-    #[Test]
-    public function matchReturnsHandle(): void
+    public function handlerMethodReturnsHandle(): void
     {
         $message  = $this->createStub(MessageInterface::class);
         $strategy = new HandleStrategy();
 
-        static::assertSame('handle', $strategy->match($message));
+        static::assertSame('handle', $strategy->handlerMethod($message));
+    }
+
+    #[Test]
+    public function implementsStrategyInterface(): void
+    {
+        static::assertInstanceOf(StrategyInterface::class, new HandleStrategy());
     }
 }
