@@ -45,14 +45,14 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
             throw HandlerMethodNotFoundException::forMethod($resolved, $method);
         }
 
-        return $next->handle($this->coerceResult(
+        return $next->handle($this->checkResult(
             $resolved->{$method}($message),
             $resolved,
             $method,
         ));
     }
 
-    private function coerceResult(
+    private function checkResult(
         mixed $result,
         CommandHandlerInterface|QueryHandlerInterface $handler,
         string $method,
