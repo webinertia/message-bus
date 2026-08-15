@@ -2,7 +2,7 @@
 
 [![Continuous Integration](https://github.com/webinertia/message-bus/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/webinertia/message-bus/actions/workflows/continuous-integration.yml)
 [![codecov](https://codecov.io/gh/webinertia/message-bus/graph/badge.svg)](https://codecov.io/gh/webinertia/message-bus)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwebinertia%2Fmessage-bus%2F1.1.x)](https://dashboard.stryker-mutator.io/reports/github.com/webinertia/message-bus/1.1.x)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fwebinertia%2Fmessage-bus%2F2.0.x)](https://dashboard.stryker-mutator.io/reports/github.com/webinertia/message-bus/2.0.x)
 
 A command/query message bus for [Mezzio](https://docs.mezzio.dev/) and other PSR-11 based applications.
 Messages (commands or queries) are dispatched through a configurable middleware pipeline to their
