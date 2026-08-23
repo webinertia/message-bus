@@ -36,13 +36,14 @@
         "psr/container": "^2.0"
     },
     "require-dev": {
-        "infection/infection": "^0.34.1",
+        "infection/infection": "^0.35.0",
         "laminas/laminas-servicemanager": "^4.0.0",
         "php-standard-library/type": "^6.2",
         "phpbench/phpbench": "^1.7",
-        "phpunit/phpunit": "^12.5.30",
+        "phpunit/phpunit": "^13.3.0",
         "roave/backward-compatibility-check": "^8.21.0",
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "webware/webware-tools": "^0.1.x-dev"
     },
     "suggest": {
         "laminas/laminas-servicemanager": "Laminas\\ServiceManager component"
