@@ -1,6 +1,8 @@
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
+/.specify/ export-ignore
+/specs/ export-ignore
 /renovate.json export-ignore
 /phpunit.xml.dist export-ignore
 /test/ export-ignore

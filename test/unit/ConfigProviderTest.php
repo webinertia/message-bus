@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest;
+namespace WebwareTest\MessageBus;
 
 use Override;
 use PHPUnit\Framework\Attributes\CoversClass;

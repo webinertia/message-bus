@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest;
+namespace WebwareTest\MessageBus;
 
 use Override;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -23,7 +23,7 @@ use Webware\MessageBus\Query\QueryInterface;
 use Webware\MessageBus\Query\QueryResult;
 use Webware\MessageBus\QueryHandlerInterface;
 use Webware\MessageBus\ResultInterface;
-use Webware\MessageBusTest\TestAssets\InMemoryContainer;
+use WebwareTest\MessageBus\TestAssets\InMemoryContainer;
 
 #[CoversClass(MessageHandlerResolver::class)]
 final class MessageHandlerResolverTest extends TestCase

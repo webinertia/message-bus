@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest\Exception;
+namespace WebwareTest\MessageBus\Exception;
 
 use App\FooMessage;
 use PHPUnit\Framework\Attributes\CoversClass;

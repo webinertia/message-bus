@@ -17,7 +17,7 @@ function collection_mapper_factory(string $key): callable
 {
     $configPath = '$config[' . ConfigProvider::class . '][' . ConfigProvider::MIDDLEWARE_PIPELINE_KEY . ']';
 
-    return static function (array $item) use ($key, $configPath): array {
+    return /** @throws InvalidConfigurationException */ static function (array $item) use ($key, $configPath): array {
         if (array_key_exists($key, $item)) {
             return $item;
         }

@@ -6,6 +6,7 @@ namespace Webware\MessageBus;
 
 use Override;
 use SplQueue;
+use Webware\MessageBus\Exception\NextHandlerAlreadyCalledException;
 use Webware\MessageBus\Handler\EmptyPipelineHandler;
 
 final class MiddlewarePipe implements MiddlewarePipelineInterface
@@ -23,6 +24,8 @@ final class MiddlewarePipe implements MiddlewarePipelineInterface
 
     /**
      * Handle a Command.
+     *
+     * @throws NextHandlerAlreadyCalledException
      */
     #[Override]
     public function handle(MessageInterface $message): ResultInterface
@@ -45,6 +48,8 @@ final class MiddlewarePipe implements MiddlewarePipelineInterface
      * Executes the internal pipeline, passing $next as the "final handler".
      * If this looks familiar it's because it works almost exactly like Mezzio.
      * Which is intentional.
+     *
+     * @throws NextHandlerAlreadyCalledException
      */
     #[Override]
     public function process(MessageInterface $message, PipelineHandlerInterface $next): ResultInterface

@@ -18,7 +18,7 @@
     "config": {
         "sort-packages": true,
         "platform": {
-            "php": "8.4.1"
+            "php": "8.4.99"
         },
         "allow-plugins": {
             "composer/package-versions-deprecated": true,
@@ -59,8 +59,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Webware\\MessageBusTest\\": "test/unit/",
-            "Webware\\MessageBusIntegrationTest\\": "test/integration/",
+            "WebwareTest\\MessageBus\\": "test/unit/",
+            "WebwareTestIntegration\\MessageBus\\": "test/integration/",
             "Webware\\MessageBusBench\\": "benchmarks/"
         }
     },
@@ -69,10 +69,11 @@
         "mutation-test": "infection",
         "test-all": [
             "@test",
-            "@test-integration"
+            "@test-integration",
+            "@mutation-test"
         ],
-        "test": "phpunit --colors=always --testsuite \"unit test\"",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "test-integration": "phpunit --colors=always --testsuite \"integration test\""
+        "test": "phpunit --colors=always --no-coverage --testsuite \"unit test\"",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml --coverage-html coverage/html --coverage-text=coverage.txt",
+        "test-integration": "phpunit --colors=always --no-coverage --testsuite \"integration test\""
     }
 }

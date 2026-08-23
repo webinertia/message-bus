@@ -31,6 +31,7 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
 
     /**
      * @throws HandlerMethodNotFoundException
+     * @throws TypeError
      */
     #[Override]
     public function process(
@@ -51,6 +52,9 @@ final readonly class MessageHandlerMiddleware implements MiddlewareInterface
         ));
     }
 
+    /**
+     * @throws TypeError
+     */
     private function checkResult(
         mixed $result,
         MessageHandlerInterface $handler,

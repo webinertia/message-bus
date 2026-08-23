@@ -1,4 +1,3 @@
-#:schema https://mago.carthage.software/1.47.3/schema.json
 extends = "vendor/webware/webware-tools/mago.toml"
 php-version = "8.4.1"
 
@@ -7,26 +6,7 @@ baseline = "lint-baseline.toml"
 
 [analyzer]
 baseline = "analysis-baseline.toml"
-baseline-variant = "loose"
-unchecked-exceptions = [
-    "Error",
-    "LogicException",
-    "PHPUnit\\Framework\\Exception",
-    "PHPUnit\\Framework\\MockObject\\Exception",
-    "PHPUnit\\Event\\NoPreviousThrowableException",
-]
 
 [source]
 paths = ["src", "test"]
 includes = ["vendor"]
-
-# Central guard rules already cover Webware\** interfaces and traits;
-# the Exception suffix rule is package-specific.
-[guard]
-excludes = ["test"]
-
-[[guard.structural.rules]]
-on = "Webware\\MessageBus\\Exception\\**"
-target = "class"
-must-be-named = "*Exception"
-reason = "Exception classes must be suffixed with Exception."
