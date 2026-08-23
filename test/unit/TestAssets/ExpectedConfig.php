@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest\TestAssets;
+namespace WebwareTest\MessageBus\TestAssets;
 
 use Webware\MessageBus\Container;
 use Webware\MessageBus\Handler\EmptyPipelineHandler;

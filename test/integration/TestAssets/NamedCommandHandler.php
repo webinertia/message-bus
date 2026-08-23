@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusIntegrationTest\TestAssets;
+namespace WebwareTestIntegration\MessageBus\TestAssets;
 
 use Webware\MessageBus\Command\CommandResult;
 use Webware\MessageBus\CommandHandlerInterface;

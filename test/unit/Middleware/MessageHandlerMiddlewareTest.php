@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest\Middleware;
+namespace WebwareTest\MessageBus\Middleware;
 
 use Closure;
 use Override;

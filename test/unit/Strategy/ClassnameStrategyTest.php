@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest\Strategy;
+namespace WebwareTest\MessageBus\Strategy;
 
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Webware\MessageBus\Strategy\ClassnameStrategy;
 use Webware\MessageBus\StrategyInterface;
-use Webware\MessageBusTest\TestAssets\CreateUser;
+use WebwareTest\MessageBus\TestAssets\CreateUser;
 
 #[CoversClass(ClassnameStrategy::class)]
 final class ClassnameStrategyTest extends TestCase

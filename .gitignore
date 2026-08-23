@@ -2,6 +2,7 @@
 /phpbench.json
 /clover.xml
 /coverage.txt
+/coverage/
 /phpunit.xml
 /infection.json5
 /infection.log
@@ -10,3 +11,5 @@
 /.vscode
 /mago-results.txt
 *:Zone.Identifier
+/.specify/
+/specs/

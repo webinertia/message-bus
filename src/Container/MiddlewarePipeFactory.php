@@ -10,6 +10,7 @@ use Psr\Container\NotFoundExceptionInterface;
 use SplPriorityQueue;
 use Webware\MessageBus\ConfigProvider;
 use Webware\MessageBus\Exception;
+use Webware\MessageBus\Exception\InvalidConfigurationException;
 use Webware\MessageBus\MessageBusInterface;
 use Webware\MessageBus\MiddlewareInterface;
 use Webware\MessageBus\MiddlewarePipe;
@@ -76,6 +77,7 @@ final readonly class MiddlewarePipeFactory
 
     /**
      * @throws ContainerExceptionInterface
+     * @throws InvalidConfigurationException
      * @throws NotFoundExceptionInterface
      */
     public function __invoke(ContainerInterface $container): MiddlewarePipelineInterface

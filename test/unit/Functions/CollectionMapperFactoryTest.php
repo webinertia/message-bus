@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Webware\MessageBusTest\Functions;
+namespace WebwareTest\MessageBus\Functions;
 
 use App\FooHandler;
 use PHPUnit\Framework\Attributes\CoversFunction;

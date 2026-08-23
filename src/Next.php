@@ -27,6 +27,9 @@ final class Next implements PipelineHandlerInterface
         $this->queue = clone $queue;
     }
 
+    /**
+     * @throws NextHandlerAlreadyCalledException
+     */
     #[Override]
     public function handle(MessageInterface $message): ResultInterface
     {
