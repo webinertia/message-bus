@@ -9,10 +9,10 @@ namespace Webware\MessageBus\Command;
  */
 trait NamedCommandTrait
 {
-    public private(set) ?string $name = null;
+    public private(set) string $commandName = self::class;
 
-    public function getName(): string
+    public function getCommandName(): string
     {
-        return $this->name ?? static::class;
+        return $this->commandName;
     }
 }

@@ -6,9 +6,11 @@ Marker interface extending `MessageInterface`. Application commands (write opera
 
 ## `Command\NamedCommandInterface` / `Command\NamedCommandTrait`
 
-`NamedCommandInterface` adds `getName(): string` to a command. `NamedCommandTrait` provides a default
-implementation backed by a protected `$name` property, falling back to `static::class` when `$name`
-isn't set.
+`NamedCommandInterface` adds `getCommandName(): string` to a command. It declares no property: interface
+properties are always public, so the contract stays method-only and implementors keep control of their
+storage. `NamedCommandTrait` implements it with a `$commandName` property that defaults to the using class
+name (late-bound, so it reports the concrete command class) and is writable only from inside the class.
+The distinct name keeps it clear of a command's own `$name` property.
 
 ## `Command\CommandResultInterface` / `Command\CommandResult`
 
