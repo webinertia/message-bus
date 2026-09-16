@@ -9,5 +9,5 @@ namespace Webware\MessageBus\Command;
  */
 interface NamedCommandInterface extends CommandInterface
 {
-    public function getName(): string;
+    public function getCommandName(): string;
 }
