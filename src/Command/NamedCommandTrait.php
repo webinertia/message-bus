@@ -9,7 +9,7 @@ namespace Webware\MessageBus\Command;
  */
 trait NamedCommandTrait
 {
-    protected readonly string $name;
+    public private(set) ?string $name = null;
 
     public function getName(): string
     {
