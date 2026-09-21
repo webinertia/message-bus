@@ -64,10 +64,12 @@ exception classes in `src/Exception/` must be suffixed `Exception`.
 
 ## Continuous integration
 
-* [`continuous-integration.yml`](../../.github/workflows/continuous-integration.yml) runs `mago format
-  --check`, `mago lint`, `mago analyze`, `mago guard`, and the full PHPUnit suite across PHP 8.4/8.5,
-  against lowest/locked/latest dependency sets. On the locked 8.4 leg it also runs coverage
-  (`composer test-coverage`, uploaded to Codecov) and mutation testing (`composer mutation-test`).
+* The organization's required workflow
+  ([`org-required-ci.yml`](https://github.com/webinertia/.github/blob/master/.github/workflows/org-required-ci.yml))
+  runs `mago format --check`, `mago lint`, `mago analyze`, `mago guard`, and the full PHPUnit suite
+  across PHP 8.4/8.5, against lowest/locked/latest dependency sets. On the locked 8.5 leg it also runs
+  coverage (`composer test-coverage`, uploaded to Codecov) and mutation testing
+  (`composer mutation-test`). Per-package values live in `webware-ci.json` at the repository root.
 * [`backward-compatibility-check.yml`](../../.github/workflows/backward-compatibility-check.yml) runs
   [`roave/backward-compatibility-check`](https://github.com/Roave/BackwardCompatibilityCheck) against
   the last released tag on the same major line, to catch breaking API changes. It skips once a major

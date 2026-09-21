@@ -63,9 +63,11 @@ exception classes in `src/Exception/` must be suffixed `Exception`.
 
 ## Continuous integration
 
-* [`continuous-integration.yml`](../../.github/workflows/continuous-integration.yml) runs `mago format
-  --check`, `mago lint`, `mago analyze`, `mago guard`, and the full PHPUnit suite across PHP 8.4/8.5,
-  against lowest/locked/latest dependency sets.
+* The organization's required workflow
+  ([`org-required-ci.yml`](https://github.com/webinertia/.github/blob/master/.github/workflows/org-required-ci.yml))
+  runs `mago format --check`, `mago lint`, `mago analyze`, `mago guard`, and the full PHPUnit suite
+  across PHP 8.4/8.5, against lowest/locked/latest dependency sets. Per-package values live in
+  `webware-ci.json` at the repository root.
 * [`backward-compatibility-check.yml`](../../.github/workflows/backward-compatibility-check.yml) runs
   [`roave/backward-compatibility-check`](https://github.com/Roave/BackwardCompatibilityCheck) against
   the last released tag, to catch breaking API changes. SemVer gives no BC guarantee below `1.0.0`, so
