@@ -9,7 +9,7 @@
 # This compose file is the single source of truth for the environment. Two
 # ways to use it:
 #
-#   1. VS Code Dev Container — "Reopen in Container" uses
+#   1. VS Code Dev Container: "Reopen in Container" uses
 #      .devcontainer/devcontainer.json, which is *backed by* this file (it
 #      references the `tooling` service rather than defining its own).
 #
@@ -24,7 +24,7 @@
 # Packages whose tests need MySQL uncomment the `mysql` service below (and the
 # `phpmyadmin` web UI if wanted), plus the `depends_on` block on `tooling`. The
 # `mysql` service mirrors the `db-image` package parameter used by CI, and is
-# reachable from `tooling` as host `mysql` on port 3306 — matching the PhpDb
+# reachable from `tooling` as host `mysql` on port 3306: matching the PhpDb
 # `mysql.local.php` connection convention. Packages that need a different
 # engine add an equivalent service here (postgres, mariadb, ...) mirroring
 # their own `db-image` parameter.
@@ -57,7 +57,7 @@ services:
     volumes:
       # Bind-mount the source so edits are visible on both the host and the
       # container. vendor/ is deliberately overridden below with a named
-      # volume — do not bind-mount it from the host.
+      # volume - do not bind-mount it from the host.
       - .:/app
       # Named volumes keep vendor/ and the Composer cache on the Linux
       # filesystem. Bind-mounting vendor/ from a Windows host is extremely
@@ -73,7 +73,7 @@ services:
     working_dir: /app
 
   # -------------------------------------------------------------------------
-  # MySQL (optional) — uncomment this whole block for packages whose tests
+  # MySQL (optional) - uncomment this whole block for packages whose tests
   # need a MySQL database (e.g. webware-acl via php-db/phpdb-mysql).
   #
   # Mirror the spec's `db-image` / `db-env-json` / `db-port` Package Parameters
@@ -99,7 +99,7 @@ services:
   #     # survives `docker compose down` (use `down -v` to wipe it).
   #     - mysql-data:/var/lib/mysql
   #
-  # # phpMyAdmin — optional web UI for the `mysql` service above. Reachable at
+  # # phpMyAdmin - optional web UI for the `mysql` service above. Reachable at
   # # http://localhost:8080 (log in with the MYSQL_* credentials). Uncomment
   # # alongside `mysql`.
   # phpmyadmin:
