@@ -1,6 +1,6 @@
 // Webware alignment Dev Container.
 //
-// This is a thin wrapper around compose.yml — it reuses the `tooling` service
+// This is a thin wrapper around compose.yml - it reuses the `tooling` service
 // rather than defining a parallel environment, so VS Code and plain
 // `docker compose` users share the exact same container. Non-VS Code
 // developers are not orphaned: they use `docker compose up -d` +
