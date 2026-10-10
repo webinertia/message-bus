@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae949aa906ba236157e24ebf62a0ebad",
+    "content-hash": "d0f3ab3e76a8569780c17594d6b0cbd0",
     "packages": [
         {
             "name": "psr/container",
@@ -9522,16 +9522,16 @@
         },
         {
             "name": "webware/webware-tools",
-            "version": "1.0.0-rc.3",
+            "version": "1.0.0-rc.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webinertia/webware-tools.git",
-                "reference": "9fbca6e240d850f258caeea0619c6b44df0a2a86"
+                "reference": "46caed444973f45ae81c27909d55ffc5602e3175"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webinertia/webware-tools/zipball/9fbca6e240d850f258caeea0619c6b44df0a2a86",
-                "reference": "9fbca6e240d850f258caeea0619c6b44df0a2a86",
+                "url": "https://api.github.com/repos/webinertia/webware-tools/zipball/46caed444973f45ae81c27909d55ffc5602e3175",
+                "reference": "46caed444973f45ae81c27909d55ffc5602e3175",
                 "shasum": ""
             },
             "require": {
@@ -9560,9 +9560,9 @@
             ],
             "support": {
                 "issues": "https://github.com/webinertia/webware-tools/issues",
-                "source": "https://github.com/webinertia/webware-tools/tree/1.0.0-rc.3"
+                "source": "https://github.com/webinertia/webware-tools/tree/1.0.0-rc.5"
             },
-            "time": "2026-10-10T01:33:39+00:00"
+            "time": "2026-10-10T04:07:50+00:00"
         }
     ],
     "aliases": [],
