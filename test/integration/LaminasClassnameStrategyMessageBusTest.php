@@ -54,7 +54,7 @@ final class LaminasClassnameStrategyMessageBusTest extends TestCase
         parent::setUp();
 
         /** @var ProviderConfig $config */
-        $config                                            = (new ConfigProvider())();
+        $config                                            = new ConfigProvider()();
         $dependencies                                      = $config['dependencies'];
         $dependencies['aliases'][StrategyInterface::class] = ClassnameStrategy::class;
         $dependencies['factories']                         += [

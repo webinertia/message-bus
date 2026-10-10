@@ -54,7 +54,7 @@ final class LaminasServiceManagerMessageBusTest extends TestCase
     {
         parent::setUp();
         /** @var ProviderConfig $config */
-        $config                    = (new ConfigProvider())();
+        $config                    = new ConfigProvider()();
         $dependencies              = $config['dependencies'];
         $dependencies['factories'] += [
             TestAssets\CommandHandler::class       => InvokableFactory::class,
