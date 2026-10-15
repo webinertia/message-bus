@@ -39,12 +39,14 @@ final class MessageBusFactoryTest extends TestCase
     public function factoryCanBeInvokedMultipleTimes(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->exactly(2))
+        $container
+            ->expects($this->exactly(2))
             ->method('has')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn(true);
 
-        $container->expects($this->exactly(2))
+        $container
+            ->expects($this->exactly(2))
             ->method('get')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn($this->middlewarePipeline);
@@ -66,12 +68,14 @@ final class MessageBusFactoryTest extends TestCase
     public function factoryCreatesNewInstancesWithSameMiddlewarePipeline(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->exactly(2))
+        $container
+            ->expects($this->exactly(2))
             ->method('has')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn(true);
 
-        $container->expects($this->exactly(2))
+        $container
+            ->expects($this->exactly(2))
             ->method('get')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn($this->middlewarePipeline);
@@ -93,7 +97,8 @@ final class MessageBusFactoryTest extends TestCase
         // Verify the factory has the __invoke method
         static::assertSame(
             '__invoke',
-            new ReflectionClass($this->factory)->getMethod('__invoke')
+            new ReflectionClass($this->factory)
+                ->getMethod('__invoke')
                 ->getName(),
         );
     }
@@ -107,12 +112,14 @@ final class MessageBusFactoryTest extends TestCase
     public function invokeChecksContainerForCorrectService(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with(static::identicalTo(MiddlewarePipelineInterface::class))
             ->willReturn(true);
 
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('get')
             ->with(static::identicalTo(MiddlewarePipelineInterface::class))
             ->willReturn($this->middlewarePipeline);
@@ -131,12 +138,14 @@ final class MessageBusFactoryTest extends TestCase
     public function invokeReturnsMessageBusWhenMiddlewarePipelineIsAvailable(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn(true);
 
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('get')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn($this->middlewarePipeline);
@@ -154,13 +163,13 @@ final class MessageBusFactoryTest extends TestCase
     public function invokeThrowsServiceNotFoundExceptionWhenMiddlewarePipelineIsNotAvailable(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with(MiddlewarePipelineInterface::class)
             ->willReturn(false);
 
-        $container->expects($this->never())
-            ->method('get');
+        $container->expects($this->never())->method('get');
 
         $this->expectException(ServiceNotFoundException::class);
         $this->expectExceptionMessage(

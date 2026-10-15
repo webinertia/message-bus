@@ -51,7 +51,8 @@ final class NextTest extends TestCase
 
         /** @var MiddlewareInterface&MockObject $middleware2 */
         $middleware2 = $this->createMock(MiddlewareInterface::class);
-        $middleware2->expects($this->once())
+        $middleware2
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturn($expectedResult);
@@ -65,7 +66,8 @@ final class NextTest extends TestCase
         $queue->enqueue($middleware2);
         $next = new Next($queue);
 
-        $middleware1->expects($this->once())
+        $middleware1
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturnCallback(function (MessageInterface $message, Next $capturedNext) use (
@@ -98,7 +100,8 @@ final class NextTest extends TestCase
 
         /** @var MiddlewareInterface&MockObject $middleware */
         $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware->expects($this->once())
+        $middleware
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturn($expectedResult);
@@ -136,7 +139,8 @@ final class NextTest extends TestCase
         /** @var MiddlewareInterface&MockObject $middleware2 */
         $middleware2 = $this->createStub(MiddlewareInterface::class);
 
-        $middleware1->expects($this->once())
+        $middleware1
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturn($this->createResultStub('result1'));
@@ -195,7 +199,8 @@ final class NextTest extends TestCase
 
         /** @var MiddlewareInterface&MockObject $middleware */
         $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware->expects($this->once())
+        $middleware
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturn($expectedResult);
@@ -220,7 +225,8 @@ final class NextTest extends TestCase
 
         /** @var MiddlewareInterface&MockObject $middleware */
         $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware->expects($this->once())
+        $middleware
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturn($expectedResult);
@@ -258,7 +264,8 @@ final class NextTest extends TestCase
 
             /** @var MiddlewareInterface&MockObject $middleware */
             $middleware = $this->createMock(MiddlewareInterface::class);
-            $middleware->expects($this->once())
+            $middleware
+                ->expects($this->once())
                 ->method('process')
                 ->with($command, $this->isInstanceOf(Next::class))
                 ->willReturn($expectedResult);
@@ -335,7 +342,8 @@ final class NextTest extends TestCase
         /** @var MiddlewareInterface&MockObject $middleware3 */
         $middleware3 = $this->createStub(MiddlewareInterface::class);
 
-        $middleware1->expects($this->once())
+        $middleware1
+            ->expects($this->once())
             ->method('process')
             ->with($command, $this->isInstanceOf(Next::class))
             ->willReturn($expectedResult);

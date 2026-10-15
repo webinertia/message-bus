@@ -65,12 +65,14 @@ final class MiddlewarePipeFactoryTest extends TestCase
         ];
 
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->exactly(2))
+        $container
+            ->expects($this->exactly(2))
             ->method('has')
             ->with('config')
             ->willReturn(true);
 
-        $container->expects($this->exactly(2))
+        $container
+            ->expects($this->exactly(2))
             ->method('get')
             ->with('config')
             ->willReturn($config);
@@ -92,7 +94,8 @@ final class MiddlewarePipeFactoryTest extends TestCase
         // Verify the factory has the __invoke method
         static::assertSame(
             '__invoke',
-            new ReflectionClass($this->factory)->getMethod('__invoke')
+            new ReflectionClass($this->factory)
+                ->getMethod('__invoke')
                 ->getName(),
         );
     }
@@ -126,17 +129,20 @@ final class MiddlewarePipeFactoryTest extends TestCase
 
         /** @var MiddlewareInterface&MockObject $middleware2 */
         $middleware2 = $this->createMock(MiddlewareInterface::class);
-        $middleware2->expects($this->once())
+        $middleware2
+            ->expects($this->once())
             ->method('process')
             ->willReturn($expectedResult);
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'TestMiddleware2' => true,
                 default                     => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config'          => $config,
                 'TestMiddleware2' => $middleware2,
@@ -201,13 +207,15 @@ final class MiddlewarePipeFactoryTest extends TestCase
             }
         };
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'LowPriority', 'HighPriority' => true,
                 default                                 => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config'       => $config,
                 'LowPriority'  => $lowPriority,
@@ -247,17 +255,20 @@ final class MiddlewarePipeFactoryTest extends TestCase
 
         /** @var MiddlewareInterface&MockObject $middleware */
         $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware->expects($this->once())
+        $middleware
+            ->expects($this->once())
             ->method('process')
             ->willReturn($expectedResult);
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'TestMiddleware1' => true,
                 default                     => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config'          => $config,
                 'TestMiddleware1' => $middleware,
@@ -286,12 +297,14 @@ final class MiddlewarePipeFactoryTest extends TestCase
         ];
 
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with('config')
             ->willReturn(true);
 
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('get')
             ->with('config')
             ->willReturn($config);
@@ -328,14 +341,16 @@ final class MiddlewarePipeFactoryTest extends TestCase
         };
 
         $resolverContainer = $this->createStub(ContainerInterface::class);
-        $resolverContainer->method('has')
+        $resolverContainer
+            ->method('has')
             ->willReturnCallback(
                 static fn(string $service): bool => match ($service) {
                     'config', $handler::class => true,
                     default                   => false,
                 },
             );
-        $resolverContainer->method('get')
+        $resolverContainer
+            ->method('get')
             ->willReturnCallback(
                 static fn(string $service): mixed => match ($service) {
                     'config' => [
@@ -394,14 +409,16 @@ final class MiddlewarePipeFactoryTest extends TestCase
             ],
         ];
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(
                 static fn($service) => match ($service) {
                     'config', 'EarlyMiddleware', 'LateMiddleware', MessageHandlerMiddleware::class => true,
                     default                                                                        => false,
                 },
             );
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(
                 static fn($service) => match ($service) {
                     'config'                        => $config,
@@ -443,14 +460,16 @@ final class MiddlewarePipeFactoryTest extends TestCase
             ],
         ];
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'TestMiddleware1' => true,
                 'TestMiddleware2'           => false,
                 default                     => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(fn($service) => match ($service) {
                 'config'          => $config,
                 'TestMiddleware1' => $this->middleware1,
@@ -471,7 +490,8 @@ final class MiddlewarePipeFactoryTest extends TestCase
     public function invokeThrowsExceptionWhenConfigServiceNotFound(): void
     {
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with('config')
             ->willReturn(false);
@@ -493,12 +513,14 @@ final class MiddlewarePipeFactoryTest extends TestCase
         $config = [];
 
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with('config')
             ->willReturn(true);
 
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('get')
             ->with('config')
             ->willReturn($config);
@@ -531,12 +553,14 @@ final class MiddlewarePipeFactoryTest extends TestCase
         ];
 
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with('config')
             ->willReturn(true);
 
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('get')
             ->with('config')
             ->willReturn($config);
@@ -564,12 +588,14 @@ final class MiddlewarePipeFactoryTest extends TestCase
         ];
 
         $container = $this->createMock(ContainerInterface::class);
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('has')
             ->with('config')
             ->willReturn(true);
 
-        $container->expects($this->once())
+        $container
+            ->expects($this->once())
             ->method('get')
             ->with('config')
             ->willReturn($config);
@@ -598,13 +624,15 @@ final class MiddlewarePipeFactoryTest extends TestCase
             ],
         ];
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'TestMiddleware1' => true,
                 default                     => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(fn($service) => match ($service) {
                 'config'          => $config,
                 'TestMiddleware1' => $this->middleware1,
@@ -639,13 +667,15 @@ final class MiddlewarePipeFactoryTest extends TestCase
             ],
         ];
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'TestMiddleware1', 'TestMiddleware2' => true,
                 default                                        => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(fn($service) => match ($service) {
                 'config'          => $config,
                 'TestMiddleware1' => $this->middleware1,
@@ -677,13 +707,15 @@ final class MiddlewarePipeFactoryTest extends TestCase
             ],
         ];
 
-        $this->container->method('has')
+        $this->container
+            ->method('has')
             ->willReturnCallback(static fn($service) => match ($service) {
                 'config', 'TestMiddleware1' => true,
                 default                     => false,
             });
 
-        $this->container->method('get')
+        $this->container
+            ->method('get')
             ->willReturnCallback(fn($service) => match ($service) {
                 'config'          => $config,
                 'TestMiddleware1' => $this->middleware1,

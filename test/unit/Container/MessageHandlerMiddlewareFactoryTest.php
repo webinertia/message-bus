@@ -71,7 +71,8 @@ final class MessageHandlerMiddlewareFactoryTest extends TestCase
     {
         static::assertSame(
             '__invoke',
-            new ReflectionClass($this->factory)->getMethod('__invoke')
+            new ReflectionClass($this->factory)
+                ->getMethod('__invoke')
                 ->getName(),
         );
     }
@@ -84,7 +85,8 @@ final class MessageHandlerMiddlewareFactoryTest extends TestCase
     public function invokeThrowsTypeErrorWhenResolverIsWrongType(): void
     {
         $container = $this->createStub(ContainerInterface::class);
-        $container->method('get')
+        $container
+            ->method('get')
             ->willReturnCallback(
                 static fn(string $id): mixed => match ($id) {
                     MessageHandlerResolverInterface::class => new stdClass(),
@@ -112,7 +114,8 @@ final class MessageHandlerMiddlewareFactoryTest extends TestCase
     private function createContainerStub(): ContainerInterface
     {
         $container = $this->createStub(ContainerInterface::class);
-        $container->method('get')
+        $container
+            ->method('get')
             ->willReturnCallback(
                 fn(string $id): mixed => match ($id) {
                     MessageHandlerResolverInterface::class => $this->resolver,
