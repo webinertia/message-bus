@@ -54,7 +54,8 @@ final class MessageHandlerResolverFactoryTest extends TestCase
         // Verify the factory has the __invoke method
         static::assertSame(
             '__invoke',
-            new ReflectionClass($this->factory)->getMethod('__invoke')
+            new ReflectionClass($this->factory)
+                ->getMethod('__invoke')
                 ->getName(),
         );
     }

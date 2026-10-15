@@ -61,12 +61,14 @@ final class MessageHandlerMiddlewareTest extends TestCase
         $strategy   = $this->createMock(StrategyInterface::class);
         $middleware = new MessageHandlerMiddleware($resolver, $strategy);
 
-        $resolver->expects($this->once())
+        $resolver
+            ->expects($this->once())
             ->method('resolve')
             ->with(static::identicalTo($this->message))
             ->willReturn($this->messageHandler);
 
-        $strategy->expects($this->once())
+        $strategy
+            ->expects($this->once())
             ->method('handlerMethod')
             ->with(static::identicalTo($this->message))
             ->willReturn('handle');
@@ -87,7 +89,8 @@ final class MessageHandlerMiddlewareTest extends TestCase
         $resolver   = $this->createMock(MessageHandlerResolverInterface::class);
         $middleware = new MessageHandlerMiddleware($resolver, new HandleStrategy());
 
-        $resolver->expects($this->once())
+        $resolver
+            ->expects($this->once())
             ->method('resolve')
             ->with($this->message)
             ->willReturn($messageHandler);
@@ -103,7 +106,8 @@ final class MessageHandlerMiddlewareTest extends TestCase
         $intermediateResult = $this->createResultStub('intermediate result');
         $expectedResult     = $this->createResultStub('final result');
 
-        $this->resolver->method('resolve')
+        $this->resolver
+            ->method('resolve')
             ->willReturn($this->createCommandHandler(static fn(): ResultInterface => $intermediateResult));
 
         $next = $this->createNextHandler(static fn(): ResultInterface => $expectedResult);

@@ -98,7 +98,8 @@ final class MiddlewarePipeTest extends TestCase
             $expectedResult = $this->createResultStub($expectedValue);
 
             $middleware = $this->createMock(MiddlewareInterface::class);
-            $middleware->expects($this->once())
+            $middleware
+                ->expects($this->once())
                 ->method('process')
                 ->willReturn($expectedResult);
 
@@ -125,7 +126,8 @@ final class MiddlewarePipeTest extends TestCase
         $expectedResult = $this->createResultStub('middleware result');
 
         $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware->expects($this->once())
+        $middleware
+            ->expects($this->once())
             ->method('process')
             ->with(
                 $this->command,
@@ -146,13 +148,13 @@ final class MiddlewarePipeTest extends TestCase
         $expectedResult = $this->createResultStub('short circuit result');
 
         $shortCircuitMiddleware = $this->createMock(MiddlewareInterface::class);
-        $shortCircuitMiddleware->expects($this->once())
+        $shortCircuitMiddleware
+            ->expects($this->once())
             ->method('process')
             ->willReturn($expectedResult);
 
         $neverCalledMiddleware = $this->createMock(MiddlewareInterface::class);
-        $neverCalledMiddleware->expects($this->never())
-            ->method('process');
+        $neverCalledMiddleware->expects($this->never())->method('process');
 
         $this->middlewarePipe->pipe($shortCircuitMiddleware);
         $this->middlewarePipe->pipe($neverCalledMiddleware);
@@ -336,7 +338,8 @@ final class MiddlewarePipeTest extends TestCase
         $expectedResult = $this->createResultStub('middleware result');
 
         $middleware = $this->createMock(MiddlewareInterface::class);
-        $middleware->expects($this->once())
+        $middleware
+            ->expects($this->once())
             ->method('process')
             ->with(
                 $this->command,
