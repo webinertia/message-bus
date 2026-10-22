@@ -35,10 +35,10 @@ services:
     build:
       context: .
       args:
-        # PHP version to base the image on (latest 8.4 patch release). Keep
+        # PHP version to base the image on (latest 8.5 patch release). Keep
         # in sync with the package's supported PHP versions and
         # `config.platform.php`.
-        PHP_VERSION: "8.4.24"
+        PHP_VERSION: "8.5.12"
     # Keep the container alive so `docker compose exec` can attach to it.
     # (VS Code Dev Containers override this with their own command.)
     command: sleep infinity
