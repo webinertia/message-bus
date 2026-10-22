@@ -83,7 +83,7 @@ services:
   # the package's test-database convention.
   # -------------------------------------------------------------------------
   # mysql:
-  #   image: mysql:9.7
+  #   image: mysql:9.7.4
   #   environment:
   #     MYSQL_ROOT_PASSWORD: root
   #     MYSQL_DATABASE: webware
@@ -103,7 +103,7 @@ services:
   # # http://localhost:8080 (log in with the MYSQL_* credentials). Uncomment
   # # alongside `mysql`.
   # phpmyadmin:
-  #   image: phpmyadmin:latest
+  #   image: phpmyadmin:5.2.3
   #   environment:
   #     PMA_HOST: mysql
   #     PMA_PORT: 3306
