@@ -43,7 +43,7 @@
         "phpunit/phpunit": "^13.3.0",
         "roave/backward-compatibility-check": "^8.21.0",
         "roave/security-advisories": "dev-master",
-        "webware/webware-tools": "^1.0.0-rc.7"
+        "webware/webware-tools": "^1.0.0-rc.8"
     },
     "suggest": {
         "laminas/laminas-servicemanager": "Laminas\\ServiceManager component"
