@@ -40,7 +40,7 @@
         "laminas/laminas-servicemanager": "^4.0.0",
         "php-standard-library/type": "^6.4.2",
         "phpbench/phpbench": "^1.7",
-        "phpunit/phpunit": "^13.3.0",
+        "phpunit/phpunit": "^13.4.4",
         "roave/backward-compatibility-check": "^8.21.0",
         "roave/security-advisories": "dev-master",
         "webware/webware-tools": "^1.0.0-rc.8"
