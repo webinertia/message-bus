@@ -38,7 +38,7 @@
     "require-dev": {
         "infection/infection": "^0.35.0",
         "laminas/laminas-servicemanager": "^4.0.0",
-        "php-standard-library/type": "^6.2",
+        "php-standard-library/type": "^6.4.2",
         "phpbench/phpbench": "^1.7",
         "phpunit/phpunit": "^13.3.0",
         "roave/backward-compatibility-check": "^8.21.0",
