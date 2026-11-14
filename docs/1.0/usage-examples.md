@@ -1,12 +1,10 @@
-= Usage Examples
+# Usage Examples
 
-[[defining-a-command-and-its-handler]]
-== Defining a command and its handler
+## Defining a command and its handler
 
 A command is any class implementing `Command\CommandInterface`:
 
-[source,php]
-----
+```php
 namespace App\Command;
 
 use Webware\MessageBus\Command\CommandInterface;
@@ -17,7 +15,7 @@ final readonly class CreateUser implements CommandInterface
         public string $email,
     ) {}
 }
-----
+```
 
 `CommandHandlerInterface::handle()` is typed to the broad `MessageInterface`, but parameter types are
 contravariant, an implementation is free to widen a parameter type, just never narrow it. Declaring
@@ -25,8 +23,7 @@ the parameter as `MessageInterface|CommandInterface` is still a valid override (
 `MessageInterface`, so it's just as wide as the interface requires), and it tells static analysis tools
 (and readers) that this handler only ever receives commands, without any runtime cost:
 
-[source,php]
-----
+```php
 namespace App\Command;
 
 use Override;
@@ -52,19 +49,18 @@ final readonly class CreateUserHandler implements CommandHandlerInterface
         return new CommandResult($command, MessageStatus::Success, $userId);
     }
 }
-----
+```
 
 The union only buys you the `CommandInterface` half of the contract at the type level (useful if you
 need something like `NamedCommandInterface::getName()` before knowing the concrete class); you still
 need `Type\instance_of()` (or an `instanceof` check) to narrow to `CreateUser` itself, since nothing
 else guarantees that a given `CommandInterface` is the one this handler expects.
 
-== Mapping the command to its handler
+## Mapping the command to its handler
 
 Extend the `command_map` in your application config and register the handler with your container:
 
-[source,php]
-----
+```php
 use Webware\MessageBus\ConfigProvider;
 use Webware\MessageBus\MessageBusInterface;
 
@@ -80,15 +76,14 @@ return [
         ],
     ],
 ];
-----
+```
 
 Queries follow the exact same shape under `ConfigProvider::QUERY_MAP_KEY`, using
 `Query\QueryInterface`/`QueryHandlerInterface` and `Query\QueryResult` instead.
 
-== Dispatching
+## Dispatching
 
-[source,php]
-----
+```php
 /** @var Psr\Container\ContainerInterface $container */
 $bus = $container->get(MessageBusInterface::class);
 
@@ -96,16 +91,14 @@ $result = $bus->handle(new App\Command\CreateUser('jane@example.com'));
 
 $result->getStatus(); // MessageStatus::Success or ::Failure
 $result->getResult(); // 42, in this example
-----
+```
 
-[[writing-custom-middleware]]
-== Writing custom middleware
+## Writing custom middleware
 
 Middleware implements `MiddlewareInterface` and decides whether/when to call the next handler in the
 pipeline:
 
-[source,php]
-----
+```php
 namespace App\Middleware;
 
 use Override;
@@ -130,15 +123,14 @@ final readonly class LoggingMiddleware implements MiddlewareInterface
         return $handler->handle($message);
     }
 }
-----
+```
 
 Register it as a service and add it to `middleware_pipeline` with a `priority`. Higher priority runs
 earlier; `Middleware\MessageHandlerMiddleware` is registered at priority `1` (`ConfigProvider::DEFAULT_PRIORITY`)
 so it runs last by default, give your middleware a higher priority to run before the handler is
 resolved:
 
-[source,php]
-----
+```php
 use Webware\MessageBus\ConfigProvider;
 use Webware\MessageBus\MessageBusInterface;
 
@@ -157,11 +149,11 @@ return [
         ],
     ],
 ];
-----
+```
 
 Middleware registered without a `priority` defaults to `1`; entries sharing the same priority run in
 the order they were declared. Middleware class-strings that aren't registered in the container are
-silently skipped when the pipeline is built (see link:api-reference/configuration.adoc[Configuration]).
+silently skipped when the pipeline is built (see [Configuration](./api-reference/configuration.md)).
 
-See link:flow-charts.adoc#custom-middleware-example[Execution Flow] for a diagram of how this
+See [Execution Flow](./flow-charts.md#custom-middleware-example) for a diagram of how this
 `LoggingMiddleware` example fits into the pipeline, and why it never sees the `CommandResult`.

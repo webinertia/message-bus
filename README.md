@@ -27,15 +27,13 @@ composer's `extra.laminas.config-provider`.
 
 ## Documentation
 
-Full documentation is published at <https://docs.webinertia.net/message-bus/v2/>.
+Full documentation lives in [docs/1.0](./docs/1.0/index.md):
 
-- [Overview & Architecture](https://docs.webinertia.net/message-bus/v2/)
-- [Getting Started](https://docs.webinertia.net/message-bus/v2/getting-started.html)
-- [Usage Examples](https://docs.webinertia.net/message-bus/v2/usage-examples.html)
-- [API Reference](https://docs.webinertia.net/message-bus/v2/api-reference/)
-- [Contributing](https://docs.webinertia.net/message-bus/v2/contributing.html)
-
-Documentation for the 1.x line is archived at <https://docs.webinertia.net/message-bus/v1/>.
+- [Overview &amp; Architecture](./docs/1.0/index.md)
+- [Getting Started](./docs/1.0/getting-started.md)
+- [Usage Examples](./docs/1.0/usage-examples.md)
+- [API Reference](./docs/1.0/api-reference/index.md)
+- [Contributing](./docs/1.0/contributing.md)
 
 ## Testing
 

@@ -1,4 +1,4 @@
-= Execution Flow
+# Execution Flow
 
 Solid arrows below are the message travelling forward through the pipeline, in priority order; dashed
 arrows are the result on its way back. A result doesn't exist until `MessageHandlerMiddleware` resolves
@@ -10,15 +10,12 @@ GitHub renders Mermaid diagrams as scalable SVG, so you can zoom in (browser zoo
 the diagram) for a closer look. Each diagram below is also wrapped in a collapsible `<details>` block
 and laid out top-to-bottom so it stays readable without needing to scroll sideways.
 
-== Overview
+## Overview
 
-++++
 <details open>
 <summary>Expand/collapse diagram</summary>
-++++
 
-[source,mermaid]
-----
+```mermaid
 flowchart TD
     App([Application]) -->|handle message| Bus[MessageBus]
     Bus -->|handle message| Pipe[MiddlewarePipe]
@@ -31,29 +28,22 @@ flowchart TD
     HandlerMW -.->|Result| Pipe
     Pipe -.->|Result| Bus
     Bus -.->|Result| App
-----
+```
 
-++++
 </details>
-++++
 
 `MessageHandlerMiddleware` is just the last entry in the pipeline (lowest default priority), so any
 middleware you register runs before the handler is resolved.
 
-[[custom-middleware-example]]
-== Custom middleware example
+## Custom middleware example
 
-Using the `LoggingMiddleware` from
-link:usage-examples.adoc#writing-custom-middleware[Writing custom middleware], registered at priority
-`10` (above `MessageHandlerMiddleware`'s default priority of `1`):
+Using the `LoggingMiddleware` from [Writing custom middleware](./usage-examples.md#writing-custom-middleware),
+registered at priority `10` (above `MessageHandlerMiddleware`'s default priority of `1`):
 
-++++
 <details open>
 <summary>Expand/collapse diagram</summary>
-++++
 
-[source,mermaid]
-----
+```mermaid
 flowchart TD
     Bus[MessageBus] -->|process CreateUser, next| Log[LoggingMiddleware<br/>priority 10]
     Log -->|next.handle message| HandlerMW[MessageHandlerMiddleware<br/>priority 1, runs last]
@@ -61,8 +51,6 @@ flowchart TD
     HandlerMW -->|invoke method| Handler[CreateUserHandler]
     Handler -.->|CommandResult| HandlerMW
     HandlerMW -.->|CommandResult| Bus
-----
+```
 
-++++
 </details>
-++++

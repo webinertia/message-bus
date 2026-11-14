@@ -1,6 +1,6 @@
-= Contributing
+# Contributing
 
-== Target Branch
+## Target Branch
 
 Given a current release of 1.0.0
 
@@ -24,75 +24,70 @@ Please target your pull request to the correct branch:
 
 You MUST provide a signoff in your commits for us to accept your
 contribution/patch. You can do this by providing either the --signoff or -s flag when using
-`git commit`, to certify the link:https://developercertificate.org/[Developer Certificate of Origin].
+`git commit`, to certify the [Developer Certificate of Origin](https://developercertificate.org/).
 
-== Running tests
+## Running tests
 
-[source,bash]
-----
+```bash
 composer test             # unit tests only (test/unit)
 composer test-integration # integration tests only (test/integration)
 composer test-all         # both suites
 composer test-coverage    # unit tests + coverage-clover clover.xml
-----
+```
 
-== Benchmarks
+## Benchmarks
 
-[source,bash]
-----
+```bash
 composer benchmark # phpbench run --report=aggregate
-----
+```
 
 Benchmarks live under `benchmarks/` (config in `phpbench.json.dist`) and measure pipeline dispatch
-performance, see link:benchmark-results.adoc[Benchmark Results] for the latest numbers. This directory
+performance, see [Benchmark Results](./benchmark-results.md) for the latest numbers. This directory
 is harness code, not library source, so it's excluded from `mago`'s checked `[source] paths`.
 
-== Quality tooling
+## Quality tooling
 
-This project uses link:https://mago.carthage.software/[Mago] (config in `mago.toml`) for formatting,
+This project uses [Mago](https://mago.carthage.software/) (config in `mago.toml`) for formatting,
 linting, and static analysis, there is no PHPStan/PHP_CodeSniffer in this repo.
 
-[source,bash]
-----
+```bash
 mago format --check # formatting check
 mago lint           # lint rules
 mago analyze        # static analysis
 mago guard          # structural naming/finality rules
-----
+```
 
 `mago guard`'s structural rules (configured under `[[guard.structural.rules]]` in `mago.toml`) enforce
 naming conventions across the codebase: interfaces must be suffixed `Interface`, traits `Trait`, and
 exception classes in `src/Exception/` must be suffixed `Exception`.
 
-== Continuous integration
+## Continuous integration
 
 * The organization's required workflow
-  (link:https://github.com/webinertia/.github/blob/master/.github/workflows/org-required-ci.yml[`org-required-ci.yml`])
+  ([`org-required-ci.yml`](https://github.com/webinertia/.github/blob/master/.github/workflows/org-required-ci.yml))
   runs `mago format --check`, `mago lint`, `mago analyze`, `mago guard`, and the full PHPUnit suite
   across PHP 8.4/8.5, against lowest/locked/latest dependency sets. Per-package values live in
   `webware-ci.json` at the repository root.
-* link:https://github.com/webinertia/message-bus/blob/2.0.x/.github/workflows/backward-compatibility-check.yml[`backward-compatibility-check.yml`]
-  runs
-  link:https://github.com/Roave/BackwardCompatibilityCheck[`roave/backward-compatibility-check`]
-  against the last released tag, to catch breaking API changes. SemVer gives no BC guarantee below
-  `1.0.0`, so this only activates once a `1.0.0`+ tag exists.
+* [`backward-compatibility-check.yml`](../../.github/workflows/backward-compatibility-check.yml) runs
+  [`roave/backward-compatibility-check`](https://github.com/Roave/BackwardCompatibilityCheck) against
+  the last released tag, to catch breaking API changes. SemVer gives no BC guarantee below `1.0.0`, so
+  this only activates once a `1.0.0`+ tag exists.
 
-== Test conventions
+## Test conventions
 
-See
-link:https://github.com/webinertia/message-bus/blob/2.0.x/.github/instructions/copilot-test-generation-instructions.md[copilot-test-generation-instructions.md]
+See [copilot-test-generation-instructions.md](../../.github/instructions/copilot-test-generation-instructions.md)
 for the full set of conventions (naming, `#[Test]`/`#[CoversClass]` attributes, stub vs. mock usage,
 directory layout). In short:
 
 * One test class per source class, mirrored under `test/unit/`.
 * Methods use the `#[Test]` attribute with a plain camelCase name describing the scenario: no `test`
   prefix.
-* Prefer `$this->createStub(...)` over `$this->createMock(...)` unless you need to assert _how_ a
+* Prefer `$this->createStub(...)` over `$this->createMock(...)` unless you need to assert *how* a
   dependency was called.
 * Construct real instances for `final readonly` classes instead of mocking them.
 
-== Backward compatibility
+## Backward compatibility
 
 This library is nearing a `1.0.0` release. Once tagged, avoid breaking changes to any class/interface
-marked `@api` in its docblock (see link:api-reference/index.adoc[API Reference]) without a major version
+marked `@api` in its docblock (see [API Reference](./api-reference/index.md)) without a major version
 bump, `roave/backward-compatibility-check` enforces this in CI.
