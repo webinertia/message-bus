@@ -31,7 +31,7 @@ final class MessageHandlerResolverFactoryTest extends TestCase
 
         static::assertInstanceOf(MessageHandlerResolver::class, $result1);
         static::assertInstanceOf(MessageHandlerResolver::class, $result2);
-        static::assertNotSame($result1, $result2, 'Factory should create new instances each time');
+        static::assertNotSame($result1, $result2, message: 'Factory should create new instances each time');
     }
 
     #[Test]

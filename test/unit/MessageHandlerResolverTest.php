@@ -98,7 +98,7 @@ final class MessageHandlerResolverTest extends TestCase
 
         $this->container->set('config', $this->buildConfig(
             commandMap: [$command::class => $commandHandler::class],
-            queryMap: [$query::class => $queryHandler::class],
+            queryMap  : [$query::class => $queryHandler::class],
         ));
         $this->container->set($commandHandler::class, $commandHandler);
         $this->container->set($queryHandler::class, $queryHandler);

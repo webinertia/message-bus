@@ -44,7 +44,7 @@ final readonly class MessageHandlerResolver implements MessageHandlerResolverInt
          * @var array{0: class-string, 1: class-string<MessageHandlerInterface>} $resolved
          */
         $resolved = match (true) {
-            array_key_exists($message::class, $cmdBusConfig[ConfigProvider::QUERY_MAP_KEY]) => [
+            array_key_exists($message::class, $cmdBusConfig[ConfigProvider::QUERY_MAP_KEY])   => [
                 $cmdBusConfig[ConfigProvider::QUERY_MAP_KEY][$message::class],
                 QueryHandlerInterface::class,
             ],

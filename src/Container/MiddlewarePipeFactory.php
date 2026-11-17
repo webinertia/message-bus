@@ -36,16 +36,16 @@ final readonly class MiddlewarePipeFactory
         ContainerInterface $container,
         MiddlewarePipelineInterface $middlewarePipe,
         array $middleware,
-    ): MiddlewarePipelineInterface {
+    ): void {
         /**
          * Equivalent mutant: falling through with an empty $middleware array
-         * reaches the same `return $middlewarePipe;` at the end of this
-         * method with no observable side effects, so no test can kill it.
+         * reaches the end of this method with no observable side effects, so
+         * no test can kill it.
          *
          * @infection-ignore-all
          */
         if ([] === $middleware) {
-            return $middlewarePipe;
+            return;
         }
 
         /**
@@ -71,8 +71,6 @@ final readonly class MiddlewarePipeFactory
             $middleware = $container->get($spec['middleware']);
             $middlewarePipe->pipe($middleware);
         }
-
-        return $middlewarePipe;
     }
 
     /**
