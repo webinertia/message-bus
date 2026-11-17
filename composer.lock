@@ -9628,16 +9628,16 @@
         },
         {
             "name": "webware/webware-tools",
-            "version": "1.0.0-rc.14",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webinertia/webware-tools.git",
-                "reference": "8093557960cc9d1415bc0f8a674da752907bfcb3"
+                "reference": "93690901938244db1a6ba0bd64d3b2779d2041b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webinertia/webware-tools/zipball/8093557960cc9d1415bc0f8a674da752907bfcb3",
-                "reference": "8093557960cc9d1415bc0f8a674da752907bfcb3",
+                "url": "https://api.github.com/repos/webinertia/webware-tools/zipball/93690901938244db1a6ba0bd64d3b2779d2041b0",
+                "reference": "93690901938244db1a6ba0bd64d3b2779d2041b0",
                 "shasum": ""
             },
             "require": {
@@ -9666,10 +9666,10 @@
             ],
             "support": {
                 "issues": "https://github.com/webinertia/webware-tools/issues",
-                "source": "https://github.com/webinertia/webware-tools/tree/1.0.0-rc.14"
+                "source": "https://github.com/webinertia/webware-tools/tree/1.0.0"
             },
-            "time": "2026-11-13T09:23:54+00:00",
-            "published-time": "2026-11-13T13:26:52+00:00"
+            "time": "2026-11-17T00:57:01+00:00",
+            "published-time": "2026-11-17T00:57:26+00:00"
         }
     ],
     "aliases": [],

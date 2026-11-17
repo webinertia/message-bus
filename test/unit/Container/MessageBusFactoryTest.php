@@ -56,7 +56,7 @@ final class MessageBusFactoryTest extends TestCase
 
         static::assertInstanceOf(MessageBus::class, $result1);
         static::assertInstanceOf(MessageBus::class, $result2);
-        static::assertNotSame($result1, $result2, 'Factory should create new instances each time');
+        static::assertNotSame($result1, $result2, message: 'Factory should create new instances each time');
     }
 
     /**
