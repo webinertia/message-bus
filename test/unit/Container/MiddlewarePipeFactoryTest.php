@@ -82,7 +82,7 @@ final class MiddlewarePipeFactoryTest extends TestCase
 
         static::assertInstanceOf(MiddlewarePipelineInterface::class, $result1);
         static::assertInstanceOf(MiddlewarePipelineInterface::class, $result2);
-        static::assertNotSame($result1, $result2, 'Factory should create new instances each time');
+        static::assertNotSame($result1, $result2, message: 'Factory should create new instances each time');
     }
 
     /**
@@ -353,7 +353,7 @@ final class MiddlewarePipeFactoryTest extends TestCase
             ->method('get')
             ->willReturnCallback(
                 static fn(string $service): mixed => match ($service) {
-                    'config' => [
+                    'config'        => [
                         MessageBusInterface::class => [
                             ConfigProvider::QUERY_MAP_KEY   => [],
                             ConfigProvider::COMMAND_MAP_KEY => [

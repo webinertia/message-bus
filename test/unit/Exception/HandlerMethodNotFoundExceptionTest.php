@@ -18,7 +18,7 @@ final class HandlerMethodNotFoundExceptionTest extends TestCase
     public function forMethodContainsHandlerClassAndMethod(): void
     {
         $handler   = new class() implements CommandHandlerInterface {};
-        $exception = HandlerMethodNotFoundException::forMethod($handler, 'createUser');
+        $exception = HandlerMethodNotFoundException::forMethod($handler, method: 'createUser');
 
         static::assertInstanceOf(InvalidArgumentException::class, $exception);
         static::assertStringContainsString($handler::class, $exception->getMessage());

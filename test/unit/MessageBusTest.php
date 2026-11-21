@@ -54,7 +54,10 @@ final class MessageBusTest extends TestCase
 
         // Since the property is private, it cannot be modified from outside
         // This effectively makes the CmdBus immutable
-        static::assertNotNull($pipelineProperty, 'Pipeline property exists and is private, ensuring immutability');
+        static::assertNotNull(
+            $pipelineProperty,
+            message: 'Pipeline property exists and is private, ensuring immutability',
+        );
     }
 
     #[Test]

@@ -30,8 +30,8 @@ final class InvalidConfigurationExceptionTest extends TestCase
     {
         $exception = InvalidConfigurationException::fromInvalidHandler(
             FooHandler::class,
-            'not-a-handler',
-            CommandHandlerInterface::class,
+            handler: 'not-a-handler',
+            expectedType: CommandHandlerInterface::class,
         );
 
         static::assertStringContainsString(FooHandler::class, $exception->getMessage());
@@ -42,7 +42,10 @@ final class InvalidConfigurationExceptionTest extends TestCase
     #[Test]
     public function fromInvalidTypeContainsKeyAndActualType(): void
     {
-        $exception = InvalidConfigurationException::fromInvalidType('handlers', 123);
+        $exception = InvalidConfigurationException::fromInvalidType(
+            key  : 'handlers',
+            value: 123,
+        );
 
         static::assertStringContainsString('handlers', $exception->getMessage());
         static::assertStringContainsString('int', $exception->getMessage());
