@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5ae61b814b1c3c7c18e1026d9afe953",
+    "content-hash": "4d86233b6394fb7d47ea6e9a898cf37f",
     "packages": [
         {
             "name": "psr/container",
@@ -9644,20 +9644,20 @@
         },
         {
             "name": "webware/webware-tools",
-            "version": "1.0.0",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webinertia/webware-tools.git",
-                "reference": "93690901938244db1a6ba0bd64d3b2779d2041b0"
+                "reference": "fad0bc28ac049364ade3ff26debc6cc7c1afc89b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webinertia/webware-tools/zipball/93690901938244db1a6ba0bd64d3b2779d2041b0",
-                "reference": "93690901938244db1a6ba0bd64d3b2779d2041b0",
+                "url": "https://api.github.com/repos/webinertia/webware-tools/zipball/fad0bc28ac049364ade3ff26debc6cc7c1afc89b",
+                "reference": "fad0bc28ac049364ade3ff26debc6cc7c1afc89b",
                 "shasum": ""
             },
             "require": {
-                "php": "~8.4.0 || ~8.5.0"
+                "php": "~8.4.0 || ~8.5.0 || ~8.6.0"
             },
             "require-dev": {
                 "roave/security-advisories": "dev-master"
@@ -9682,10 +9682,10 @@
             ],
             "support": {
                 "issues": "https://github.com/webinertia/webware-tools/issues",
-                "source": "https://github.com/webinertia/webware-tools/tree/1.0.0"
+                "source": "https://github.com/webinertia/webware-tools/tree/1.1.4"
             },
-            "time": "2026-11-17T00:57:01+00:00",
-            "published-time": "2026-11-17T00:57:26+00:00"
+            "time": "2026-11-22T08:54:14+00:00",
+            "published-time": "2026-11-22T08:54:20+00:00"
         }
     ],
     "aliases": [],
