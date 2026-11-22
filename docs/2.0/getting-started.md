@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- PHP `~8.4.1 || ~8.5.0`
+- PHP `~8.4.1 || ~8.5.0 || ~8.6.0`
 - A PSR-11 container. This library is developed and tested against
   [`laminas/laminas-servicemanager`](https://github.com/laminas/laminas-servicemanager) (`^4.0.0`), but
   any PSR-11 implementation works.
