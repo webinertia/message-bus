@@ -89,5 +89,5 @@ directory layout). In short:
 ## Backward compatibility
 
 This library is nearing a `1.0.0` release. Once tagged, avoid breaking changes to any class/interface
-marked `@api` in its docblock (see [API Reference](./api-reference/index.md)) without a major version
+marked `@api` in its docblock (see [API Reference](./api-reference/README.md)) without a major version
 bump, `roave/backward-compatibility-check` enforces this in CI.
