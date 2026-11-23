@@ -92,5 +92,5 @@ directory layout). In short:
 
 This library is on the `2.0.x` development line. Breaking changes belong in a major version bump, and
 `roave/backward-compatibility-check` enforces this in CI. Anything marked `@api` in a class/interface
-docblock (see [API Reference](./api-reference/index.md)) is a public contract; avoid breaking it
+docblock (see [API Reference](./api-reference/README.md)) is a public contract; avoid breaking it
 outside a major release.

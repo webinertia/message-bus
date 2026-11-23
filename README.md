@@ -27,12 +27,12 @@ composer's `extra.laminas.config-provider`.
 
 ## Documentation
 
-Full documentation lives in [docs/1.0](./docs/1.0/index.md):
+Full documentation lives in [docs/1.0](./docs/1.0):
 
-- [Overview &amp; Architecture](./docs/1.0/index.md)
+- [Overview &amp; Architecture](./docs/1.0)
 - [Getting Started](./docs/1.0/getting-started.md)
 - [Usage Examples](./docs/1.0/usage-examples.md)
-- [API Reference](./docs/1.0/api-reference/index.md)
+- [API Reference](./docs/1.0/api-reference)
 - [Contributing](./docs/1.0/contributing.md)
 
 ## Testing
