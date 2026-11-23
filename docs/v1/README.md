@@ -14,7 +14,7 @@ for diagrams of how a message moves through the pipeline and back.
   application.
 - [Usage Examples](./usage-examples.md) — defining commands/queries and handlers, dispatching
   messages, and writing custom middleware.
-- [API Reference](./api-reference/index.md) — what each class/interface does, grouped by area:
+- [API Reference](./api-reference/README.md) — what each class/interface does, grouped by area:
   - [Message Bus &amp; Core Contracts](./api-reference/message-bus.md)
   - [Middleware Pipeline](./api-reference/middleware-pipeline.md)
   - [Commands &amp; Queries](./api-reference/commands-and-queries.md)
